@@ -9,3 +9,16 @@
 @import '~@ionic/angular/css/text-alignment.css';
 @import '~@ionic/angular/css/text-transformation.css';
 @import '~@ionic/angular/css/flex-utils.css';
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+.my-custom-modal-css .modal-wrapper {
+    height: 50%;
+    width: 95%;
+    position: absolute;
+    display: block;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border: 0px solid !important;
+}

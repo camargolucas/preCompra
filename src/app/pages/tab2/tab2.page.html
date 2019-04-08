@@ -1,0 +1,15 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Produtos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-searchbar [(ngModel)]="terms" animated placeholder="Pesquise por produto">
+  </ion-searchbar>
+  <ion-list>
+    <ion-item *ngFor="let produto of Produtos | search : terms " detail>
+      <ion-button [routerLink]="['/details', produto.id ]" fill="clear"> {{produto.nome}} </ion-button>
+    </ion-item>
+  </ion-list>
+</ion-content>

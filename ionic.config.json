@@ -1,5 +1,7 @@
 {
   "name": "preCompraApp",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

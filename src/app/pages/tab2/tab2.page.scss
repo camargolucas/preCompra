@@ -1,0 +1,16 @@
+ion-button {
+    font-size: 13px;
+}
+
+ion-title {
+    font-size: 24px;
+    position: relative;
+}
+
+
+
+ion-searchbar {
+    color: var(--ion-color-dark);
+    --icon-color: var(--ion-color-primary);
+    --placeholder-color: var(--ion-color-dark);
+}

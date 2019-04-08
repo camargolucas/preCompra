@@ -1,0 +1,45 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Pedidos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-item class="title-item" lines="none">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="7">
+          Nome
+        </ion-col>
+        <ion-col align="right">
+          Qtd
+        </ion-col>
+        <ion-col align="right">
+          Unidade
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
+  <br>
+  <ion-list>
+    <ion-item (click)="openModal(produto)" class="product-columns" *ngFor="let produto of produtos">
+      <ion-grid>
+        <ion-row class="ion-activatable">
+          <ion-ripple-effect></ion-ripple-effect>
+          <ion-col size="7">
+            <ion-text> {{ produto.nome }} </ion-text>
+          </ion-col>
+          <ion-col align="right">
+            <ion-text> {{produto.qtd}}</ion-text>
+          </ion-col>
+          <ion-col align="right">
+            <ion-text>{{produto.unidade}}</ion-text>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+  </ion-list>
+</ion-content>

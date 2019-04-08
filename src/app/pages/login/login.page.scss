@@ -1,0 +1,18 @@
+ion-content[_ngcontent-c0] {
+    --background: url('/src/assets/img/wp1.png') no-repeat center center fixed;
+}
+
+
+ion-item-group {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    min-height: 90%;
+}
+
+ion-icon {
+    padding-right: 8px;
+    font-size: 24px;
+    color: var(--ion-color-primary);
+}
