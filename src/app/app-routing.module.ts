@@ -9,14 +9,15 @@ const routes: Routes = [
     loadChildren: "./pages/tabs/tabs.module#TabsPageModule"
   },
   {
-    path: "details/:id",
+    path: "details",
     loadChildren: "./pages/details/details.module#DetailsPageModule"
   },
   {
     path: "buy-product",
     loadChildren: "./pages/buy-product/buy-product.module#BuyProductPageModule"
   },
-  { path: "login", loadChildren: "./pages/login/login.module#LoginPageModule" }
+  { path: "login", loadChildren: "./pages/login/login.module#LoginPageModule" },
+
 ];
 
 @NgModule({
@@ -25,4 +26,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

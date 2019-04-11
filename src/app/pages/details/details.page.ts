@@ -1,3 +1,4 @@
+import { ProdutoComprado } from './../../model/produtoComprado';
 import { BuyProductPage } from "./../buy-product/buy-product.page";
 import { ProductServiceService } from "./../../providers/product-service.service";
 import { Produto } from "./../../model/produto";
@@ -12,13 +13,14 @@ import { Router, ActivatedRoute } from "@angular/router";
 })
 export class DetailsPage implements OnInit {
   constructor(
-    public router: ActivatedRoute,
+    public route: ActivatedRoute,
+    public router: Router,
     public service: ProductServiceService,
     public modalController: ModalController
-  ) {}
+  ) { }
   idLoja: number;
   produtos: Produto[];
-
+  produto;
   async openModal(produto: Produto) {
     const modal = await this.modalController.create({
       component: BuyProductPage,
@@ -31,10 +33,25 @@ export class DetailsPage implements OnInit {
   }
 
   ngOnInit() {
-    this.router.params.subscribe(param => {
-      /*  this.service.get(param["id"]).subscribe(result => {
-        this.produtos = result;
-      }); */
+    this.route.queryParams.subscribe(param => {
+
+      this.produto = this.buildJsonProduct(param)
+
+      this.service.getByProduct(this.produto)
+        .subscribe(result => {
+          this.produtos = result
+        })
     });
+  }
+
+  buildJsonProduct(obj) {
+    let objProduto;
+    let produto = JSON.parse(obj['produto'])
+    let grupo = JSON.parse(obj['grupo'])
+
+    return objProduto = {
+      'produto': produto,
+      'grupo': grupo
+    }
   }
 }

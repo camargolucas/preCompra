@@ -10,7 +10,9 @@ import { Observable } from 'rxjs';
 export class UserServiceService {
   API_URL: string = "http://localhost:21093/";
 
-  constructor(public http: HttpClient, public storage: Storage) { }
+  constructor(public http: HttpClient) {
+
+  }
 
   getUser(data): Observable<Usuario[]> {
     const dataStr = JSON.stringify(data);
@@ -20,19 +22,7 @@ export class UserServiceService {
   }
 
   loginAuthentication(login) {
-    let username = login['username']
-    let password = login['password']
-
-    let userLogin = {
-      login: username,
-      password: password
-      // UUID: "UUID"
-    };
-
-    return this.getUser(userLogin).subscribe(result => {
-      console.log(result)
-    })
-
+    return this.getUser(login)
   }
 
 

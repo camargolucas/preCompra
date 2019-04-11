@@ -1,3 +1,7 @@
+import { ProdutoComprado } from './../../model/produtoComprado';
+import { Usuario } from 'src/app/model/usuario';
+import { StorageService } from './../../providers/storage.service';
+import { Router, NavigationExtras } from '@angular/router';
 import { Produto } from "./../../model/produto";
 import { ProductServiceService } from "./../../providers/product-service.service";
 import { GrupoEconomico } from "../../model/grupoEconomico";
@@ -10,29 +14,44 @@ import { Component, OnInit, ViewChild } from "@angular/core";
 })
 export class Tab2Page implements OnInit {
   Produtos: Produto[];
+  t: ProdutoComprado
   terms: string = "";
+  usuario: Usuario
 
   @ViewChild("searchbar") searchbar;
 
-  constructor(public service: ProductServiceService) {}
+  constructor(public service: ProductServiceService, private router: Router, private storage: StorageService) { }
 
   ngOnInit() {
-    this.getData();
+
+    this.getUser();
   }
 
-  getData() {
-    return this.service.getByShop("1").subscribe(result => {
+  getUser() {
+    this.storage.get('Usuario')
+      .then(user => {
+        this.usuario = user
+        this.getData(this.usuario['grupoEconomico'])
+      })
+  }
+
+  getData(grupoEconomico) {
+    return this.service.getByGroup(grupoEconomico).subscribe(result => {
       this.Produtos = result;
     });
   }
 
-  filter(event: any) {
-    const val = event.target.value;
+  goToProduct(produto: Produto) {
+    let product = JSON.stringify(produto)
 
-    if (val && val.trim() != "") {
-      this.Produtos.filter(result => {
-        return result.nome.toLowerCase().startsWith(val);
-      });
+    let grupo = this.usuario['grupoEconomico']
+    let navExtras: NavigationExtras = {
+      queryParams: {
+        'produto': product,
+        'grupo': grupo
+      }
     }
+    this.router.navigate(["/details"], navExtras);
   }
+
 }

@@ -4,12 +4,16 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content>
   <ion-searchbar [(ngModel)]="terms" animated placeholder="Pesquise por produto">
   </ion-searchbar>
   <ion-list>
-    <ion-item *ngFor="let produto of Produtos | search : terms " detail>
-      <ion-button [routerLink]="['/details', produto.id ]" fill="clear"> {{produto.nome}} </ion-button>
-    </ion-item>
+    <ion-card>
+      <ion-card-content>
+        <ion-item lines="none" *ngFor="let produto of Produtos | search : terms " detail>
+          <ion-button (click)="goToProduct(produto)" fill="clear"> {{produto.nome}} </ion-button>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
   </ion-list>
 </ion-content>

@@ -8,7 +8,7 @@ import { tap } from "rxjs/operators";
 })
 export class ProductServiceService {
   API_URL = "http://localhost:21093/products/";
-  constructor(public http: HttpClient) {}
+  constructor(public http: HttpClient) { }
 
   get(data) {
     const dataStr = JSON.stringify(data);
@@ -17,10 +17,18 @@ export class ProductServiceService {
       .pipe(tap(console.log));
   }
 
-  getByShop(data) {
+  getByGroup(data) {
     const dataStr = JSON.stringify(data);
     return this.http
-      .get<Produto[]>(this.API_URL + "getByGroup/" + encodeURI(dataStr))
-      .pipe(tap());
+      .get<Produto[]>(this.API_URL + "getRequestByGroup/" + encodeURI(dataStr))
+      .pipe(tap(console.log));
+  }
+
+  getByProduct(data) {
+    const dataStr = JSON.stringify(data);
+    console.log(dataStr)
+    return this.http
+      .get<Produto[]>(this.API_URL + "getRequestByProduct/" + encodeURI(dataStr))
+      .pipe(tap(console.log));
   }
 }
