@@ -30,6 +30,8 @@ export class DetailsPage implements OnInit {
       }
     });
     return await modal.present();
+
+
   }
 
   ngOnInit() {

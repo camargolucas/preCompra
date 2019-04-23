@@ -1,3 +1,4 @@
+import { Util } from './util/util';
 import { BuyProductPageModule } from "./pages/buy-product/buy-product.module";
 import { BuyProductPage } from "./pages/buy-product/buy-product.page";
 import { ProductServiceService } from "./providers/product-service.service";
@@ -16,6 +17,7 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { MatButtonModule } from "@angular/material";
 import { LoginPageModule } from "./pages/login/login.module";
 import { IonicStorageModule } from '@ionic/storage';
+import { StoragePurchasedService } from './providers/storage-purchased.service';
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -35,7 +37,8 @@ import { IonicStorageModule } from '@ionic/storage';
     StatusBar,
     SplashScreen,
     [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
-    ProductServiceService
+    ProductServiceService,
+    Util
   ],
   bootstrap: [AppComponent]
 })

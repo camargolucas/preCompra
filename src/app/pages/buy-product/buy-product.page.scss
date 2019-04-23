@@ -1,22 +1,45 @@
+$fontsize:13px;
+
 .label-product {
     font-size: 14px;
     text-align: center !important;
 }
 
-/* ion-item-group {
-    display: inline-block;
-} */
+ion-note {
+    margin-top: auto;
+    margin-bottom: initial;
+}
 
 ion-item {
     margin-bottom: 15px;
+    --highlight-height: 2px;
+    --highlight-color-focused: var(--ion-color-primary);
+    --highlight-color-invalid: var(--ion-color-danger);
+    --highlight-color-valid: var(--ion-color-primary);
 
+    ion-label {
+        color: var(--ion-color-primary);
+    }
+}
+
+.item-peso-und {
+    display: inline-flex;
+    justify-content: space-between;
+}
+
+ion-select {
+    font-size: $fontsize;
+    min-width: 110px;
+    max-width: auto;
+    --padding-start: 0;
 }
 
 ion-input {
-    font-size: 12px;
-    display: inline-block;
+    font-size: $fontsize;
 }
 
+
+
 ion-note {
-    font-size: 12px;
+    font-size: $fontsize;
 }

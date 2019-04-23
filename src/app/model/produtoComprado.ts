@@ -1,5 +1,12 @@
 import { Produto } from 'src/app/model/produto';
-export interface ProdutoComprado extends Produto {
-    qtdComprada?: number
+export class ProdutoComprado extends Produto {
+    fornecedor: string;
+    valor: number;
+    peso: number
+
+    constructor() {
+        super()
+    }
 }
+
 

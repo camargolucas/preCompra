@@ -1,4 +1,4 @@
-export interface GrupoEconomico {
+export class GrupoEconomico {
   id: number;
   nome: string;
 }

@@ -4,6 +4,7 @@ import { UserServiceService } from './../../providers/user/user-service.service'
 import { Router } from "@angular/router";
 import { NavController, ToastController } from "@ionic/angular";
 import { Component, OnInit, ViewChild } from "@angular/core";
+import { ProductServiceService } from 'src/app/providers/product-service.service';
 
 @Component({
   selector: "app-login",
@@ -16,7 +17,11 @@ export class LoginPage implements OnInit {
   @ViewChild('username') username;
   @ViewChild('password') password;
 
-  constructor(public router: Router, private userService: UserServiceService, private storage: StorageService, private toast: ToastController) { }
+  constructor(public router: Router,
+    private userService: UserServiceService,
+    private storage: StorageService,
+    private toast: ToastController,
+    private apiProduct: ProductServiceService) { }
 
   ngOnInit() { }
 
@@ -32,18 +37,28 @@ export class LoginPage implements OnInit {
       let user = result['userData'][0]
 
       if (status == 'success') {
-
+        this.fillStorageRequestedProducts(user['grupoEconomico'])
         this.storage.save('Usuario', user)
         this.router.navigateByUrl("/app/tabs/tab1");
 
         this.showToast('Welcome')
       } else {
 
-        this.showToast('Houve um problema')
+        this.showToast('Houve um problema');
+
       }
 
     })
 
+
+  }
+
+  fillStorageRequestedProducts(grupoEconomico: number) {
+    this.apiProduct.getDetailedByGroup(grupoEconomico).subscribe(result => {
+
+      this.storage.update('ProdutoPedido', result)
+
+    })
 
   }
 

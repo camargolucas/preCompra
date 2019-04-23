@@ -1,10 +1,11 @@
+import { ProdutoComprado } from './../model/produtoComprado';
 import { Injectable } from "@angular/core";
 import { Storage } from "@ionic/storage";
 @Injectable({
   providedIn: "root"
 })
 export class StorageService {
-  constructor(private storage: Storage) {}
+  constructor(private storage: Storage) { }
 
   public save(key: string, data: any) {
     return this.storage.set(key, data);
@@ -20,6 +21,27 @@ export class StorageService {
   // Atualização dos dados ##############
   public update(key: string, data: any) {
     return this.save(key, data);
+  }
+
+  public insert(key: string, data: any) {
+    let arrResult: Array<any> = []
+
+    return this.get(key)
+      .then(result => {
+        if (result) {
+
+          arrResult = result;
+          arrResult.push(data);
+
+          return this.update(key, arrResult);
+        } else {
+          arrResult.push(data)
+          return this.update(key, arrResult)
+        }
+      })
+      .catch((err) => {
+        return err
+      })
   }
 
   // ##########################################

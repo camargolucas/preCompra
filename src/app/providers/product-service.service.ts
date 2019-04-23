@@ -23,6 +23,14 @@ export class ProductServiceService {
       .get<Produto[]>(this.API_URL + "getRequestByGroup/" + encodeURI(dataStr))
       .pipe(tap(console.log));
   }
+  getDetailedByGroup(data) {
+
+    const dataStr = JSON.stringify(data);
+    return this.http
+      .get<Produto[]>(this.API_URL + "getRequestDetailedByGroup/" + encodeURI(dataStr))
+      .pipe(tap(console.log));
+  }
+
 
   getByProduct(data) {
     const dataStr = JSON.stringify(data);
