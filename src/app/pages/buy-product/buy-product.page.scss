@@ -22,6 +22,10 @@ ion-item {
     }
 }
 
+ion-content {
+    --overflow: hidden;
+}
+
 .item-peso-und {
     display: inline-flex;
     justify-content: space-between;

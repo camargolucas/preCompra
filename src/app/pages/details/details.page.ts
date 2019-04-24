@@ -4,7 +4,7 @@ import { ProductServiceService } from "./../../providers/product-service.service
 import { Produto } from "./../../model/produto";
 import { Component, OnInit } from "@angular/core";
 import { NavController, ModalController } from "@ionic/angular";
-import { Router, ActivatedRoute } from "@angular/router";
+import { Router, ActivatedRoute, NavigationExtras } from "@angular/router";
 
 @Component({
   selector: "app-details",
@@ -35,6 +35,7 @@ export class DetailsPage implements OnInit {
   }
 
   ngOnInit() {
+
     this.route.queryParams.subscribe(param => {
 
       this.produto = this.buildJsonProduct(param)
@@ -56,4 +57,19 @@ export class DetailsPage implements OnInit {
       'grupo': grupo
     }
   }
+
+  goToProductDetail() {
+    let product// = JSON.stringify(produto)
+
+    //let grupo = this.usuario['grupoEconomico']
+
+    let navExtras: NavigationExtras = {
+      queryParams: {
+        'produto': product,
+        'grupo': 'grupo'
+      }
+    }
+    this.router.navigate(["/product-details"], navExtras);
+  }
 }
+

@@ -1,9 +1,43 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/details"></ion-back-button>
+    </ion-buttons>
     <ion-title>productDetails</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
+
+  <ion-text color="primary">
+    <h1>Maçã</h1>
+  </ion-text>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>
+        Benassi
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-chip color="primary" outline>5 Caixas</ion-chip>
+          </ion-col>
+          <ion-col>
+            <ion-chip color="primary" outline>{{35.00 | currency}}</ion-chip>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
+
+
+<ion-footer translucent="true">
+  <ion-toolbar color="primary">
+    <ion-text><span>Total: 20</span></ion-text>
+  </ion-toolbar>
+</ion-footer>
