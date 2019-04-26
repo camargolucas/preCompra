@@ -44,8 +44,8 @@
               </ion-row>
             </ion-grid>
           </ion-item>
-          <ion-item-options (ionSwipe)="goToProductDetail()">
-            <ion-item-option (click)="goToProductDetail()" expandable="true" color="primary">
+          <ion-item-options (ionSwipe)="goToProductDetail(produto)">
+            <ion-item-option (click)="goToProductDetail(produto)" expandable="true" color="primary">
               <ion-text>Detalhes</ion-text>
               <ion-icon slot="top" name="information-circle-outline"></ion-icon>
             </ion-item-option>

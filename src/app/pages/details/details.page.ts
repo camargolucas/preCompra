@@ -37,7 +37,7 @@ export class DetailsPage implements OnInit {
   ngOnInit() {
 
     this.route.queryParams.subscribe(param => {
-
+      console.log(param)
       this.produto = this.buildJsonProduct(param)
 
       this.service.getByProduct(this.produto)
@@ -58,18 +58,16 @@ export class DetailsPage implements OnInit {
     }
   }
 
-  goToProductDetail() {
-    let product// = JSON.stringify(produto)
-
-    //let grupo = this.usuario['grupoEconomico']
+  goToProductDetail(produto: Produto) {
+    let product = JSON.stringify(produto)
 
     let navExtras: NavigationExtras = {
       queryParams: {
         'produto': product,
-        'grupo': 'grupo'
       }
     }
     this.router.navigate(["/product-details"], navExtras);
   }
 }
+
 

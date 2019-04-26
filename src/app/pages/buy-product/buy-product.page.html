@@ -12,7 +12,7 @@
     <div class="item-peso-und">
         <ion-item lines="inset">
             <ion-label position="stacked">Unidade</ion-label>
-            <ion-select [(ngModel)]="produtoComprado.tipo" placeholder="unidade">
+            <ion-select [(ngModel)]="produtoComprado.unidade" placeholder="unidade">
                 <ion-select-option *ngFor="let unidade of unidades" value="{{unidade.tipo}}">{{unidade.tipo}}
                 </ion-select-option>
             </ion-select>
