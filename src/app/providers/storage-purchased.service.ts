@@ -13,7 +13,7 @@ export class StoragePurchasedService {
 	// ##########################################
 	// ## Resgata um objeto pela chave(key) #####
 	public get() {
-
+		console.log('2')
 		return this.storage.get(this.key);
 	}
 

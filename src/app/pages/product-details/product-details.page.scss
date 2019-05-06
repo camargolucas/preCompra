@@ -11,12 +11,24 @@ ion-footer {
         display: flex;
     }
 
+    .footer-item {
+        display: flex;
+        width: 100%;
+    }
+
+    .footer-produto-valor {
+        display: flex;
+        margin-left: auto;
+        margin-right: 10px;
+    }
+
 }
 
 ion-content {
     ion-text {
-        h1 {
+        h2 {
             margin-top: 10px;
+            margin-bottom: 25px;
             text-align: center;
         }
     }
@@ -40,13 +52,11 @@ ion-card {
         padding-bottom: 5px;
         line-height: 1.0;
         display: flex;
+        width: 100%;
 
-        ion-chip[name="chip-valor"] {
-            position: absolute;
-            right: 0;
-            margin-right: 15px;
+        .chip-valor {
+            margin-left: auto;
         }
-
 
     }
 }

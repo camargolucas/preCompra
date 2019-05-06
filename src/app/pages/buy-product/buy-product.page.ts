@@ -22,10 +22,9 @@ export class BuyProductPage implements OnInit {
   fornecedor;
   unidades: Unidade[];
   unidade: Unidade
-
+  disabled: boolean = false;
   constructor(public nav: NavParams, public modal: ModalController, public util: Util,
     public storage: StoragePurchasedService) {
-
   }
 
   ngOnInit() {
@@ -50,5 +49,14 @@ export class BuyProductPage implements OnInit {
         console.log(err)
       })
   }
+
+  setDisabled(unidade): boolean {
+    if (unidade == 'Kilo') {
+      return this.disabled = true;
+    } else {
+      return this.disabled = false;
+    }
+  }
+
 
 }

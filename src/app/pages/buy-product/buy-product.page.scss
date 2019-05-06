@@ -8,6 +8,7 @@ $fontsize:13px;
 ion-note {
     margin-top: auto;
     margin-bottom: initial;
+    font-size: $fontsize;
 }
 
 ion-item {
@@ -26,9 +27,16 @@ ion-content {
     --overflow: hidden;
 }
 
-.item-peso-und {
+.item-peso-qtd {
     display: inline-flex;
     justify-content: space-between;
+    width: 100%;
+}
+
+.item-quantidade {
+    display: flex;
+    position: relative;
+    margin-left: auto;
 }
 
 ion-select {
@@ -39,11 +47,5 @@ ion-select {
 }
 
 ion-input {
-    font-size: $fontsize;
-}
-
-
-
-ion-note {
     font-size: $fontsize;
 }

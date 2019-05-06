@@ -9,16 +9,17 @@
         <ion-input [(ngModel)]="produtoComprado.fornecedor" type="text" placeholder="Digite o Fornecedor"></ion-input>
     </ion-item>
 
-    <div class="item-peso-und">
+    <div class="item-peso-qtd">
         <ion-item lines="inset">
             <ion-label position="stacked">Unidade</ion-label>
-            <ion-select [(ngModel)]="produtoComprado.unidade" placeholder="unidade">
+            <ion-select (ionChange)="setDisabled(produtoComprado.unidade)" [(ngModel)]="produtoComprado.unidade"
+                placeholder="unidade">
                 <ion-select-option *ngFor="let unidade of unidades" value="{{unidade.tipo}}">{{unidade.tipo}}
                 </ion-select-option>
             </ion-select>
         </ion-item>
 
-        <ion-item lines="inset">
+        <ion-item class="item-quantidade" lines="inset">
             <ion-label position="stacked">Quantidade</ion-label>
             <ion-input [(ngModel)]="produtoComprado.qtd" align="left" type="number" placeholder="quantidade">
             </ion-input>
@@ -28,18 +29,19 @@
         </ion-item>
     </div>
 
-    <ion-item lines="inset">
+    <ion-item [disabled]="disabled" lines="inset">
         <ion-label position="stacked">Peso</ion-label>
-        <ion-input [(ngModel)]="produtoComprado.peso" type="text" placeholder="peso"></ion-input>
+        <ion-input [(ngModel)]="produtoComprado.peso" type="text" placeholder="peso" value="1"></ion-input>
     </ion-item>
 
     <ion-item lines="inset">
         <ion-label position="stacked">Valor</ion-label>
         <ion-input [(ngModel)]="produtoComprado.valor" type="number" placeholder="valor pago"></ion-input>
     </ion-item>
-
-    <ion-item lines="none">
-        <ion-button (click)="cancel()" fill="outline" slot="end" color="primary" shape="round">Cancelar</ion-button>
-        <ion-button (click)="save()" slot="end" color="primary" shape="round">Salvar</ion-button>
-    </ion-item>
+    <div>
+        <ion-item lines="none">
+            <ion-button (click)="cancel()" fill="outline" slot="end" color="primary" shape="round">Cancelar</ion-button>
+            <ion-button (click)="save()" slot="end" color="primary" shape="round">Salvar</ion-button>
+        </ion-item>
+    </div>
 </ion-content>

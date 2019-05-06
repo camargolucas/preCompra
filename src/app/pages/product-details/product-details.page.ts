@@ -21,22 +21,24 @@ export class ProductDetailsPage implements OnInit {
     this.filterByNameAndUnd();
   }
 
-  async getDataRoute() {
-
-    return await this.route.queryParams.subscribe(result => {
+  getDataRoute() {
+    return this.route.queryParams.subscribe(result => {
       this.produto = JSON.parse(result['produto']);
-    })
+
+    });
   }
 
-  async filterByNameAndUnd() {
+  filterByNameAndUnd() {
 
-    return await this.storage.get()
+    return this.storage.get()
       .then(result => {
-        console.log(result);
+
         this.produtos = result.filter(product => {
-          return (product['nome'] === this.produto['nome'] && product['unidade'] === this.produto['unidade'])
-        })
-      })
+
+          return (product['nome'] === this.produto['nome']);
+
+        });
+      });
   }
 
-}
+};

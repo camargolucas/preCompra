@@ -8,14 +8,14 @@ export class Util {
             tipo: 'Kilo',
             value: 'kg'
         },
-        {
+        /* {
             tipo: 'Bandeja',
             value: 'bj'
-        },
-        {
+        } ,
+   */      {
             tipo: 'Caixa',
             value: 'cx'
-        },
+        }/*,
         {
             tipo: 'Bin',
             value: 'bn'
@@ -23,12 +23,12 @@ export class Util {
         {
             tipo: 'Unidade',
             value: 'un'
-        }
+        } */
     ]
 
     getUnidades() {
         return this.unidade
     }
 
-
+    
 }

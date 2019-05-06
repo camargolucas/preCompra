@@ -14,7 +14,6 @@ import { Component, OnInit, ViewChild } from "@angular/core";
 })
 export class Tab2Page implements OnInit {
   Produtos: Produto[];
-  t: ProdutoComprado
   terms: string = "";
   usuario: Usuario
 
@@ -36,9 +35,13 @@ export class Tab2Page implements OnInit {
   }
 
   getData(grupoEconomico) {
-    return this.service.getByGroup(grupoEconomico).subscribe(result => {
+    return this.storage.get('ProdutoPedido').then((result => {
       this.Produtos = result;
-    });
+    }));
+
+    /* return this.service.getByGroup(grupoEconomico).subscribe(result => {
+      this.Produtos = result;
+    }); */
   }
 
   goToProduct(produto: Produto) {

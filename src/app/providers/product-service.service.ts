@@ -8,6 +8,7 @@ import { tap } from "rxjs/operators";
 })
 export class ProductServiceService {
   API_URL = "http://apprequestapi.kinghost.net:21093/products/";
+  // API_URL = "http://localhost:21093/products/";
   constructor(public http: HttpClient) { }
 
   get(data) {
@@ -33,8 +34,8 @@ export class ProductServiceService {
 
 
   getByProduct(data) {
+    console.log('4')
     const dataStr = JSON.stringify(data);
-    console.log(dataStr)
     return this.http
       .get<Produto[]>(this.API_URL + "getRequestByProduct/" + encodeURI(dataStr))
       .pipe(tap(console.log));

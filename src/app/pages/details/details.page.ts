@@ -37,11 +37,12 @@ export class DetailsPage implements OnInit {
   ngOnInit() {
 
     this.route.queryParams.subscribe(param => {
-      console.log(param)
+
       this.produto = this.buildJsonProduct(param)
 
       this.service.getByProduct(this.produto)
         .subscribe(result => {
+
           this.produtos = result
         })
     });
