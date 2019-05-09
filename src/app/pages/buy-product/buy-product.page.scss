@@ -12,20 +12,19 @@ ion-note {
 }
 
 ion-item {
-    margin-bottom: 15px;
-    --highlight-height: 2px;
+    padding-bottom: 12px;
+    --highlight-height: 1.5px;
     --highlight-color-focused: var(--ion-color-primary);
     --highlight-color-invalid: var(--ion-color-danger);
     --highlight-color-valid: var(--ion-color-primary);
+
 
     ion-label {
         color: var(--ion-color-primary);
     }
 }
 
-ion-content {
-    --overflow: hidden;
-}
+ion-content {}
 
 .item-peso-qtd {
     display: inline-flex;
@@ -48,4 +47,11 @@ ion-select {
 
 ion-input {
     font-size: $fontsize;
+}
+
+
+.error-message {
+    margin-left: 5px;
+    font-size: 10px;
+    color: var(--ion-color-danger)
 }

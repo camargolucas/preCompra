@@ -1,3 +1,4 @@
+import { ModalController } from '@ionic/angular';
 import { ProdutoComprado } from './../../model/produtoComprado';
 import { Usuario } from 'src/app/model/usuario';
 import { StorageService } from './../../providers/storage.service';
@@ -6,6 +7,7 @@ import { Produto } from "./../../model/produto";
 import { ProductServiceService } from "./../../providers/product-service.service";
 import { GrupoEconomico } from "../../model/grupoEconomico";
 import { Component, OnInit, ViewChild } from "@angular/core";
+import { BuyProductPage } from '../buy-product/buy-product.page';
 
 @Component({
   selector: "app-tab2",
@@ -13,13 +15,16 @@ import { Component, OnInit, ViewChild } from "@angular/core";
   styleUrls: ["./tab2.page.scss"]
 })
 export class Tab2Page implements OnInit {
-  Produtos: Produto[];
+
+  produtos: Produto[];
   terms: string = "";
   usuario: Usuario
 
   @ViewChild("searchbar") searchbar;
 
-  constructor(public service: ProductServiceService, private router: Router, private storage: StorageService) { }
+  constructor(public service: ProductServiceService, private router: Router, private modalController: ModalController, private storage: StorageService) {
+
+  }
 
   ngOnInit() {
 
@@ -29,23 +34,49 @@ export class Tab2Page implements OnInit {
   getUser() {
     this.storage.get('Usuario')
       .then(user => {
-        this.usuario = user
-        this.getData(this.usuario['grupoEconomico'])
-      })
+        this.usuario = user;
+        this.getProducts('F');
+      });
   }
 
-  getData(grupoEconomico) {
+  getProducts(type: any) {
     return this.storage.get('ProdutoPedido').then((result => {
-      this.Produtos = result;
+
+      this.filterByType(type, result);
     }));
 
-    /* return this.service.getByGroup(grupoEconomico).subscribe(result => {
-      this.Produtos = result;
-    }); */
+  }
+
+  filterByType(type: string, arrProdutos) {
+    return this.produtos = arrProdutos.filter(ret => {
+      return ret['tipo'] === type;
+    });
+  }
+
+  async openModal(produto: Produto) {
+    const modal = await this.modalController.create({
+      component: BuyProductPage,
+      cssClass: "my-custom-modal-css",
+      componentProps: {
+        produto: produto
+      }
+    });
+    return await modal.present();
+  }
+
+  goToProductDetail(produto: Produto) {
+    let product = JSON.stringify(produto);
+
+    let navExtras: NavigationExtras = {
+      queryParams: {
+        'produto': product,
+      }
+    };
+    this.router.navigate(["/product-details"], navExtras);
   }
 
   goToProduct(produto: Produto) {
-    let product = JSON.stringify(produto)
+    let product = JSON.stringify(produto);
 
     let grupo = this.usuario['grupoEconomico']
     let navExtras: NavigationExtras = {
@@ -53,7 +84,7 @@ export class Tab2Page implements OnInit {
         'produto': product,
         'grupo': grupo
       }
-    }
+    };
     this.router.navigate(["/details"], navExtras);
   }
 

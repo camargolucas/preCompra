@@ -7,6 +7,7 @@ import { NavController, NavParams, ModalController } from "@ionic/angular";
 import { Component, OnInit } from "@angular/core";
 import { Produto } from "src/app/model/produto";
 import { ViewController } from "@ionic/core";
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 
 @Component({
@@ -23,13 +24,29 @@ export class BuyProductPage implements OnInit {
   unidades: Unidade[];
   unidade: Unidade
   disabled: boolean = false;
+  formProduct: FormGroup
+  validationMessages: any
+
   constructor(public nav: NavParams, public modal: ModalController, public util: Util,
     public storage: StoragePurchasedService) {
   }
 
   ngOnInit() {
+
+
+
     this.produto = this.nav.data["produto"];
     this.unidades = this.util.getUnidades();
+    this.validationMessages = this.util.getMessages();
+
+
+    this.formProduct = new FormGroup({
+      fornecedor: new FormControl('', Validators.required),
+      unidade: new FormControl('', Validators.required),
+      quantidade: new FormControl('', Validators.required),
+      peso: new FormControl('', Validators.required),
+      valor: new FormControl('', Validators.required),
+    })
 
   }
 
@@ -46,12 +63,14 @@ export class BuyProductPage implements OnInit {
         this.modal.dismiss();
       })
       .catch((err) => {
-        console.log(err)
-      })
+        console.log(err);
+      });
   }
 
   setDisabled(unidade): boolean {
     if (unidade == 'Kilo') {
+      // Kilo por padrão deve ter peso 1
+      this.produtoComprado.peso = 1;
       return this.disabled = true;
     } else {
       return this.disabled = false;

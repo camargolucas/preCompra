@@ -1,47 +1,112 @@
 <ion-content padding>
+
     <ion-item lines="none" class="label-product">
         <ion-label color="primary">{{ produto.nome }} </ion-label>
         <ion-icon color="primary" name="nutrition"></ion-icon>
     </ion-item>
+    <form [formGroup]="formProduct">
+        <div>
+            <div>
+                <ion-item lines="inset">
+                    <ion-label position="stacked">Fornecedor</ion-label>
+                    <ion-input [(ngModel)]="produtoComprado.fornecedor" type="text" placeholder="Digite o Fornecedor"
+                        formControlName="fornecedor">
+                    </ion-input>
+                </ion-item>
+            </div>
+            <div>
+                <ng-container *ngFor="let validation of validationMessages.fornecedor">
+                    <div class="error-message"
+                        *ngIf="formProduct.get('fornecedor').hasError(validation.type) && (formProduct.get('fornecedor').dirty || formProduct.get('fornecedor').touched)">
+                        {{validation.message}}
+                    </div>
+                </ng-container>
+            </div>
+        </div>
 
-    <ion-item lines="inset">
-        <ion-label position="stacked">Fornecedor</ion-label>
-        <ion-input [(ngModel)]="produtoComprado.fornecedor" type="text" placeholder="Digite o Fornecedor"></ion-input>
-    </ion-item>
-
-    <div class="item-peso-qtd">
-        <ion-item lines="inset">
-            <ion-label position="stacked">Unidade</ion-label>
-            <ion-select (ionChange)="setDisabled(produtoComprado.unidade)" [(ngModel)]="produtoComprado.unidade"
-                placeholder="unidade">
-                <ion-select-option *ngFor="let unidade of unidades" value="{{unidade.tipo}}">{{unidade.tipo}}
-                </ion-select-option>
-            </ion-select>
-        </ion-item>
-
-        <ion-item class="item-quantidade" lines="inset">
-            <ion-label position="stacked">Quantidade</ion-label>
-            <ion-input [(ngModel)]="produtoComprado.qtd" align="left" type="number" placeholder="quantidade">
-            </ion-input>
-            <!-- <ion-note slot="end">
-                    <ion-text> / {{ produto.qtd }} </ion-text>
-                </ion-note> -->
-        </ion-item>
-    </div>
-
-    <ion-item [disabled]="disabled" lines="inset">
-        <ion-label position="stacked">Peso</ion-label>
-        <ion-input [(ngModel)]="produtoComprado.peso" type="text" placeholder="peso" value="1"></ion-input>
-    </ion-item>
-
-    <ion-item lines="inset">
-        <ion-label position="stacked">Valor</ion-label>
-        <ion-input [(ngModel)]="produtoComprado.valor" type="number" placeholder="valor pago"></ion-input>
-    </ion-item>
+        <div class="item-peso-qtd">
+            <div>
+                <div>
+                    <ion-item lines="inset">
+                        <ion-label position="stacked">Unidade</ion-label>
+                        <ion-select (ionChange)="setDisabled(produtoComprado.unidade)"
+                            [(ngModel)]="produtoComprado.unidade" placeholder="unidade" formControlName="unidade">
+                            <ion-select-option *ngFor="let unidade of unidades" value="{{unidade.tipo}}">
+                                {{unidade.tipo}}
+                            </ion-select-option>
+                        </ion-select>
+                    </ion-item>
+                </div>
+                <div>
+                    <ng-container *ngFor="let validation of validationMessages.unidade">
+                        <div class="error-message"
+                            *ngIf="formProduct.get('unidade').hasError(validation.type) && (formProduct.get('unidade').dirty || formProduct.get('unidade').touched)">
+                            {{validation.message}}
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+            <div>
+                <div>
+                    <ion-item class="item-quantidade" lines="inset">
+                        <ion-label position="stacked">Quantidade</ion-label>
+                        <ion-input [(ngModel)]="produtoComprado.qtd" align="left" type="number" placeholder="quantidade"
+                            formControlName="quantidade">
+                        </ion-input>
+                    </ion-item>
+                </div>
+                <div>
+                    <ng-container *ngFor="let validation of validationMessages.quantidade">
+                        <div class="error-message"
+                            *ngIf="formProduct.get('quantidade').hasError(validation.type) && (formProduct.get('quantidade').dirty || formProduct.get('quantidade').touched)">
+                            {{validation.message}}
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div>
+                <ion-item [disabled]="disabled" lines="inset">
+                    <ion-label position="stacked">Peso</ion-label>
+                    <ion-input [(ngModel)]="produtoComprado.peso" type="text" placeholder="peso" value="1"
+                        formControlName="peso"></ion-input>
+                </ion-item>
+            </div>
+            <div>
+                <ng-container *ngFor="let validation of validationMessages.peso">
+                    <div class="error-message"
+                        *ngIf="formProduct.get('peso').hasError(validation.type) && (formProduct.get('peso').dirty || formProduct.get('peso').touched)">
+                        {{validation.message}}
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+        <div>
+            <div>
+                <ion-item lines="inset">
+                    <ion-label position="stacked">Valor</ion-label>
+                    <ion-input [(ngModel)]="produtoComprado.valor" type="number" placeholder="valor pago"
+                        formControlName="valor"></ion-input>
+                </ion-item>
+            </div>
+            <div>
+                <ng-container *ngFor="let validation of validationMessages.valor">
+                    <div class="error-message"
+                        *ngIf="formProduct.get('valor').hasError(validation.type) && (formProduct.get('valor').dirty || formProduct.get('valor').touched)">
+                        {{validation.message}}
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </form>
     <div>
         <ion-item lines="none">
-            <ion-button (click)="cancel()" fill="outline" slot="end" color="primary" shape="round">Cancelar</ion-button>
-            <ion-button (click)="save()" slot="end" color="primary" shape="round">Salvar</ion-button>
+            <ion-button (click)="cancel()" fill="outline" slot="end" color="primary" shape="round">Cancelar
+            </ion-button>
+            <ion-button [disabled]="formProduct.invalid" (click)="save()" slot="end" color="primary" shape="round">
+                Salvar</ion-button>
         </ion-item>
     </div>
+
 </ion-content>

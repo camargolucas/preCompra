@@ -8,8 +8,8 @@ import { Observable } from 'rxjs';
   providedIn: "root"
 })
 export class UserServiceService {
-   API_URL: string = "http://apprequestapi.kinghost.net:21093/";
-  //API_URL: string = "http://localhost:21093/"
+  // API_URL: string = "http://apprequestapi.kinghost.net:21093/";
+  API_URL: string = "http://localhost:21093/"
   constructor(public http: HttpClient) {
 
   }

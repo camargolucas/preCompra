@@ -7,7 +7,32 @@ ion-title {
     position: relative;
 }
 
+.title-item {
+    font-size: 14px;
+    margin-bottom: -13px;
+    margin-top: -7px;
 
+    ion-col {
+        color: var(--ion-color-primary);
+    }
+}
+
+ion-item-option {
+    padding-right: 25px;
+    text-transform: none;
+
+    ion-icon {
+        font-size: 18px;
+    }
+}
+
+.product-columns {
+    font-size: 11px;
+}
+
+ion-ripple-effect {
+    color: var(--ion-color-primary);
+}
 
 ion-searchbar {
     color: var(--ion-color-dark);

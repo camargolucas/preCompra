@@ -13,7 +13,6 @@ export class StoragePurchasedService {
 	// ##########################################
 	// ## Resgata um objeto pela chave(key) #####
 	public get() {
-		console.log('2')
 		return this.storage.get(this.key);
 	}
 
@@ -25,10 +24,11 @@ export class StoragePurchasedService {
 				if (result) {
 					arrResult = result
 					arrResult.push(data)
-
+					console.log(arrResult)
 					return this.update(arrResult)
 				} else {
 					arrResult.push(data)
+					console.log(arrResult)
 					return this.update(arrResult)
 				}
 			})

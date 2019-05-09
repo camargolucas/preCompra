@@ -26,9 +26,35 @@ export class Util {
         } */
     ]
 
+    validation_messages = {
+        'fornecedor': [
+            { type: 'required', message: 'Necessário escolher um fornecedor' },
+            { type: 'pattern', message: 'Possuí carácteres inválidos' }
+        ],
+        'unidade': [
+            { type: 'required', message: 'Escolha a unidade' },
+
+        ],
+        'quantidade': [
+            { type: 'required', message: 'Digite a quantidade' },
+            { type: 'pattern', message: 'Apenas números' },
+        ],
+        'valor': [
+            { type: 'required', message: 'Digite o Valor' }
+        ],
+        'peso': [
+            { type: 'required', message: 'Digite o Peso do produto' }
+        ]
+    };
+
+
     getUnidades() {
-        return this.unidade
+        return this.unidade;
     }
 
-    
+    getMessages() {
+        return this.validation_messages;
+    }
+
+
 }
