@@ -4,16 +4,41 @@
         <ion-label color="primary">{{ produto.nome }} </ion-label>
         <ion-icon color="primary" name="nutrition"></ion-icon>
     </ion-item>
-    <form [formGroup]="formProduct">
+    <form class="example-form" [formGroup]="formProduct">
+
+
         <div>
+
             <div>
+
+                <mat-form-field class="example-full-width">
+
+                    <input (focus)="onFocus()" type="text" placeholder="Digite o fornecedor" aria-label="Number"
+                        matInput [formControl]="fornecedorFormControl" [matAutocomplete]="auto"
+                        formControlName="fornecedor">
+
+                    <mat-autocomplete color="primary" #auto="matAutocomplete">
+                        <cdk-virtual-scroll-viewport class="example-viewport" itemSize="50" minBufferPx="200"
+                            maxBufferPx="400">
+                            <mat-option class="example-item" *cdkVirtualFor="let option of filteredOptions | async"
+                                [value]="option">
+                                {{option}}
+                            </mat-option>
+                        </cdk-virtual-scroll-viewport>
+                    </mat-autocomplete>
+
+                </mat-form-field>
+
+            </div>
+
+            <!--  <div>
                 <ion-item lines="inset">
                     <ion-label position="stacked">Fornecedor</ion-label>
                     <ion-input [(ngModel)]="produtoComprado.fornecedor" type="text" placeholder="Digite o Fornecedor"
                         formControlName="fornecedor">
                     </ion-input>
                 </ion-item>
-            </div>
+            </div> -->
             <div>
                 <ng-container *ngFor="let validation of validationMessages.fornecedor">
                     <div class="error-message"

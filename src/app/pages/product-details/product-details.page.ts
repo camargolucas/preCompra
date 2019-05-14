@@ -2,7 +2,7 @@ import { Produto } from 'src/app/model/produto';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { NavParams } from '@ionic/angular';
-import { StoragePurchasedService } from 'src/app/providers/storage-purchased.service';
+import { StoragePurchasedService } from 'src/app/providers/storage/storage-purchased.service';
 import { ProdutoComprado } from 'src/app/model/produtoComprado';
 
 @Component({

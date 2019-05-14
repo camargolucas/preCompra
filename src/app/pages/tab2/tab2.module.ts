@@ -1,3 +1,5 @@
+import { MatFormFieldModule, MatOptionModule } from '@angular/material';
+import { MatAutocompleteModule } from '@angular/material';
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
@@ -7,6 +9,7 @@ import { IonicModule } from "@ionic/angular";
 
 import { Tab2Page } from "./tab2.page";
 import { SearchPipe } from "./search.pipe";
+import { MatButtonModule } from '@angular/material';
 
 const routes: Routes = [
   {
@@ -20,8 +23,9 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    MatButtonModule
   ],
   declarations: [Tab2Page, SearchPipe]
 })
-export class Tab2PageModule {}
+export class Tab2PageModule { }

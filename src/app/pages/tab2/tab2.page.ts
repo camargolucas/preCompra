@@ -1,14 +1,15 @@
 import { ModalController } from '@ionic/angular';
 import { ProdutoComprado } from './../../model/produtoComprado';
 import { Usuario } from 'src/app/model/usuario';
-import { StorageService } from './../../providers/storage.service';
+
 import { Router, NavigationExtras } from '@angular/router';
 import { Produto } from "./../../model/produto";
-import { ProductServiceService } from "./../../providers/product-service.service";
+
 import { GrupoEconomico } from "../../model/grupoEconomico";
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { BuyProductPage } from '../buy-product/buy-product.page';
-
+import { ProductServiceService } from 'src/app/providers/service/product/product-service.service';
+import { StorageService } from 'src/app/providers/storage/storage.service';
 @Component({
   selector: "app-tab2",
   templateUrl: "./tab2.page.html",

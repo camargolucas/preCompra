@@ -1,7 +1,8 @@
+@import '~@angular/material/theming';
 $fontsize:13px;
 
 .label-product {
-    font-size: 14px;
+    font-size: 15px;
     text-align: center !important;
 }
 
@@ -12,6 +13,7 @@ ion-note {
 }
 
 ion-item {
+
     padding-bottom: 12px;
     --highlight-height: 1.5px;
     --highlight-color-focused: var(--ion-color-primary);
@@ -23,8 +25,6 @@ ion-item {
         color: var(--ion-color-primary);
     }
 }
-
-ion-content {}
 
 .item-peso-qtd {
     display: inline-flex;
@@ -54,4 +54,27 @@ ion-input {
     margin-left: 5px;
     font-size: 10px;
     color: var(--ion-color-danger)
+}
+
+.example-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+
+}
+
+.example-viewport {
+    height: 200px;
+
+}
+
+.example-item {
+    height: 50px;
+}
+
+.example-full-width {
+    width: 90%;
+    margin: 5px;
+    margin-left: 15px;
+
 }

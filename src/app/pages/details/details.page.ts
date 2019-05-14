@@ -1,10 +1,11 @@
 import { ProdutoComprado } from './../../model/produtoComprado';
 import { BuyProductPage } from "./../buy-product/buy-product.page";
-import { ProductServiceService } from "./../../providers/product-service.service";
+
 import { Produto } from "./../../model/produto";
 import { Component, OnInit } from "@angular/core";
 import { NavController, ModalController } from "@ionic/angular";
 import { Router, ActivatedRoute, NavigationExtras } from "@angular/router";
+import { ProductServiceService } from 'src/app/providers/service/product/product-service.service';
 
 @Component({
   selector: "app-details",
