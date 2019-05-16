@@ -4,51 +4,34 @@
         <ion-label color="primary">{{ produto.nome }} </ion-label>
         <ion-icon color="primary" name="nutrition"></ion-icon>
     </ion-item>
-    <form class="example-form" [formGroup]="formProduct">
 
-
+    <div>
         <div>
+            <mat-form-field class="example-full-width">
+                <input matInput type="text" placeholder="Digite o fornecedor" [formControl]="fornecedorFormControl"
+                    [matAutocomplete]="auto" [(ngModel)]="produtoComprado.fornecedor">
+                <mat-autocomplete color="primary" #auto="matAutocomplete">
+                    <cdk-virtual-scroll-viewport class="example-viewport" itemSize="50" minBufferPx="200"
+                        maxBufferPx="500">
+                        <mat-option class="example-item" *cdkVirtualFor="let option of filteredOptions | async"
+                            [value]="option.FANTASIA">
+                            {{option.FANTASIA}}
+                        </mat-option>
+                    </cdk-virtual-scroll-viewport>
 
-            <div>
-
-                <mat-form-field class="example-full-width">
-
-                    <input (focus)="onFocus()" type="text" placeholder="Digite o fornecedor" aria-label="Number"
-                        matInput [formControl]="fornecedorFormControl" [matAutocomplete]="auto"
-                        formControlName="fornecedor">
-
-                    <mat-autocomplete color="primary" #auto="matAutocomplete">
-                        <cdk-virtual-scroll-viewport class="example-viewport" itemSize="50" minBufferPx="200"
-                            maxBufferPx="400">
-                            <mat-option class="example-item" *cdkVirtualFor="let option of filteredOptions | async"
-                                [value]="option">
-                                {{option}}
-                            </mat-option>
-                        </cdk-virtual-scroll-viewport>
-                    </mat-autocomplete>
-
-                </mat-form-field>
-
-            </div>
-
-            <!--  <div>
-                <ion-item lines="inset">
-                    <ion-label position="stacked">Fornecedor</ion-label>
-                    <ion-input [(ngModel)]="produtoComprado.fornecedor" type="text" placeholder="Digite o Fornecedor"
-                        formControlName="fornecedor">
-                    </ion-input>
-                </ion-item>
-            </div> -->
-            <div>
-                <ng-container *ngFor="let validation of validationMessages.fornecedor">
-                    <div class="error-message"
-                        *ngIf="formProduct.get('fornecedor').hasError(validation.type) && (formProduct.get('fornecedor').dirty || formProduct.get('fornecedor').touched)">
-                        {{validation.message}}
-                    </div>
-                </ng-container>
-            </div>
+                </mat-autocomplete>
+            </mat-form-field>
         </div>
-
+        <div>
+            <ng-container *ngFor="let validation of validationMessages.fornecedor">
+                <div class="error-message"
+                    *ngIf="formProduct.hasError(validation.type) && (formProduct.get('fornecedor').dirty || formProduct.get('fornecedor').touched)">
+                    {{validation.message}}
+                </div>
+            </ng-container>
+        </div>
+    </div>
+    <form class="example-form" [formGroup]="formProduct">
         <div class="item-peso-qtd">
             <div>
                 <div>
@@ -127,10 +110,12 @@
     </form>
     <div>
         <ion-item lines="none">
-            <ion-button (click)="cancel()" fill="outline" slot="end" color="primary" shape="round">Cancelar
+            <ion-button (click)="cancel()" fill="outline" slot="end" color="primary" shape="round">
+                Cancelar
             </ion-button>
             <ion-button [disabled]="formProduct.invalid" (click)="save()" slot="end" color="primary" shape="round">
-                Salvar</ion-button>
+                Salvar
+            </ion-button>
         </ion-item>
     </div>
 

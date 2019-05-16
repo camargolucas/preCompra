@@ -33,7 +33,7 @@ export class LoginPage implements OnInit {
       login: this.username.value,
       password: this.password.value,
       UUID: 'UUID'
-    }
+    };
 
     this.userService.loginAuthentication(userLogin).subscribe(result => {
       let status = result['status']
@@ -51,7 +51,7 @@ export class LoginPage implements OnInit {
 
       }
 
-    })
+    });
 
 
   }

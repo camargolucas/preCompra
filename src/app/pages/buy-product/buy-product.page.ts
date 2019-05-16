@@ -3,10 +3,10 @@ import { StoragePurchasedService } from '../../providers/storage/storage-purchas
 import { ProdutoComprado } from './../../model/produtoComprado';
 import { Util } from './../../util/util';
 import { Unidade } from './../../model/unidade';
-import { NavController, NavParams, ModalController } from "@ionic/angular";
-import { Component, OnInit, ViewChild, Input } from "@angular/core";
-import { Produto } from "src/app/model/produto";
-import { ViewController } from "@ionic/core";
+import { NavController, NavParams, ModalController, ToastController } from '@ionic/angular';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Produto } from 'src/app/model/produto';
+import { ViewController } from '@ionic/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
@@ -14,9 +14,9 @@ import { MatAutocompleteTrigger, MatAutocomplete } from '@angular/material';
 
 
 @Component({
-  selector: "app-buy-product",
-  templateUrl: "./buy-product.page.html",
-  styleUrls: ["./buy-product.page.scss"]
+  selector: 'app-buy-product',
+  templateUrl: './buy-product.page.html',
+  styleUrls: ['./buy-product.page.scss']
 })
 
 
@@ -30,24 +30,24 @@ export class BuyProductPage implements OnInit {
   fornecedor;
   unidades: Unidade[];
   unidade: Unidade;
-  disabled: boolean = false;
+  disabled = false;
   formProduct: FormGroup;
   validationMessages: any;
   fornecedorFormControl = new FormControl();
 
-  options: string[] = ['One', 'Two', 'Three', 'Jota', 'Teste', 'Maluco', 'One', 'Two', 'Three', 'Jota', 'Teste', 'Maluco', 'One', 'Two', 'Three', 'Jota', 'Teste', 'Maluco', 'One', 'Two', 'Three', 'Jota', 'Teste', 'Maluco'];
+  options: string[] = [];
   filteredOptions: Observable<string[]>;
 
   constructor(public nav: NavParams, public modal: ModalController, public util: Util,
-    public storagePurchased: StoragePurchasedService, private storage: StorageService) {
+    public storagePurchased: StoragePurchasedService, private storage: StorageService, private toast: ToastController) {
 
     this.storage.get('ClienteFornecedor').then((result => {
-      console.log(result);
+      this.options = result;
     }));
   }
 
   ngOnInit() {
-    this.produto = this.nav.data["produto"];
+    this.produto = this.nav.data['produto'];
     this.unidades = this.util.getUnidades();
     this.validationMessages = this.util.getMessages();
 
@@ -62,7 +62,7 @@ export class BuyProductPage implements OnInit {
   formValidation() {
 
     this.formProduct = new FormGroup({
-      fornecedor: new FormControl('', Validators.required),
+      /*   fornecedor: new FormControl('', Validators.required), */
       unidade: new FormControl('', Validators.required),
       quantidade: new FormControl('', Validators.required),
       peso: new FormControl('', Validators.required),
@@ -70,35 +70,47 @@ export class BuyProductPage implements OnInit {
     });
   }
 
-  onFocus() {
-
-  }
-
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
 
-    return this.options.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
+    return this.options.filter((result => {
+      return result['FANTASIA'].toLowerCase().startsWith(filterValue.toLowerCase());
+    }));
   }
 
   cancel() {
+
     this.modal.dismiss();
+
+  }
+
+  verifyFields(): boolean {
+
+    if (this.produtoComprado['fornecedor'] !== undefined) { return true; }
+
   }
 
   save() {
-    this.produtoComprado['id'] = this.produto['id']
-    this.produtoComprado['nome'] = this.produto['nome']
 
-    this.storagePurchased.insert(this.produtoComprado)
-      .then((result) => {
-        this.modal.dismiss();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (this.verifyFields()) {
+
+      this.produtoComprado['id'] = this.produto['id'];
+      this.produtoComprado['nome'] = this.produto['nome'];
+
+      this.storagePurchased.insert(this.produtoComprado)
+        .then((result) => {
+          this.modal.dismiss();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      this.presentToast('Preencha todos os campos');
+    }
   }
 
   setDisabled(unidade): boolean {
-    if (unidade == 'Kilo') {
+    if (unidade === 'Kilo') {
       // Kilo por padrão deve ter peso 1
       this.produtoComprado.peso = 1;
       return this.disabled = true;
@@ -107,5 +119,11 @@ export class BuyProductPage implements OnInit {
     }
   }
 
-
+  async presentToast(message: string) {
+    const toast = await this.toast.create({
+      message: message,
+      duration: 3000
+    });
+    toast.present();
+  }
 }

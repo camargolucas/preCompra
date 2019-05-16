@@ -6,8 +6,8 @@ import { tap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class SupplierService {
-  API_URL = 'http://localhost:21093/supplier'
-
+  //API_URL = 'http://localhost:21093/supplier'
+  API_URL = "http://apprequestapi.kinghost.net:21093/supplier"
   constructor(private http: HttpClient) { }
 
   getAll() {
