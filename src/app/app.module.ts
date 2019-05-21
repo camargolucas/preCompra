@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Util } from './util/util';
 import { BuyProductPageModule } from "./pages/buy-product/buy-product.module";
@@ -23,6 +24,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AutoCompleteModule } from 'ionic4-auto-complete';
 import { ProductServiceService } from './providers/service/product/product-service.service';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { CurrencyMaskModule } from "ng2-currency-mask";
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -44,7 +47,8 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     ReactiveFormsModule,
     FormsModule,
     AutoCompleteModule,
-    ScrollingModule
+    ScrollingModule,
+    CurrencyMaskModule
 
   ],
   providers: [
@@ -52,7 +56,8 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     SplashScreen,
     [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
     ProductServiceService,
-    Util
+    Util,
+    DatePipe
   ],
   bootstrap: [AppComponent]
 })

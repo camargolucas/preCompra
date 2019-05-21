@@ -34,7 +34,7 @@ export class BuyProductPage implements OnInit {
   formProduct: FormGroup;
   validationMessages: any;
   fornecedorFormControl = new FormControl();
-
+  items
   options: string[] = [];
   filteredOptions: Observable<string[]>;
 

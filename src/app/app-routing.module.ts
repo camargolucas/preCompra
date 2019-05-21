@@ -18,6 +18,7 @@ const routes: Routes = [
   },
   { path: "login", loadChildren: "./pages/login/login.module#LoginPageModule" },
   { path: 'product-details', loadChildren: './pages/product-details/product-details.module#ProductDetailsPageModule' },
+  { path: 'edit-product-details', loadChildren: './pages/edit-product-details/edit-product-details.module#EditProductDetailsPageModule' },
 
 ];
 

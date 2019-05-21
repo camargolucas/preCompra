@@ -13,13 +13,34 @@
 
   <ion-card *ngFor="let produto of produtos">
     <ion-card-header>
-      <ion-card-title>
-        {{produto.fornecedor}}
-      </ion-card-title>
+      <div class="card-header">
+        <div class="card-title">
+          <ion-card-title>
+            {{produto.fornecedor}}
+          </ion-card-title>
+        </div>
+        <div class="card-edit-remove">
+          <div class="card-edit">
+            <ion-button fill="clear" shape="round" size="small">
+              <ion-icon name="create"></ion-icon>
+            </ion-button>
+          </div>
+          <div class="card-remove">
+            <ion-button fill="clear" shape="round" size="small">
+              <ion-icon name="trash"></ion-icon>
+            </ion-button>
+          </div>
+        </div>
+      </div>
     </ion-card-header>
     <ion-card-content>
-      <div class="chip-qtd">
-        <ion-chip name="chip-qtd" color="primary" outline>{{produto.qtd}} {{produto.unidade}}</ion-chip>
+      <div class="div-chip-qtd-peso">
+        <div class="chip-qtd">
+          <ion-chip name="chip-qtd" color="primary" outline>{{produto.qtd}} {{produto.unidade}}</ion-chip>
+        </div>
+        <div *ngIf="produto.unidade !== 'Kilo' ">
+          <ion-chip name="chip-peso" color="primary" outline>{{produto.peso}} kg</ion-chip>
+        </div>
       </div>
       <div class="chip-valor">
         <ion-chip name="chip-valor" color="primary" outline>{{produto.valor | currency}}</ion-chip>
@@ -33,12 +54,11 @@
   <ion-toolbar>
     <div class="footer-item">
       <div class="footer-produto-qtd">
-        <ion-text><span>200 produtos</span></ion-text>
+        <ion-text><span>200 </span></ion-text>
       </div>
       <div class="footer-produto-valor">
         <ion-text><span>{{100 | currency}}</span></ion-text>
       </div>
     </div>
-
   </ion-toolbar>
 </ion-footer>

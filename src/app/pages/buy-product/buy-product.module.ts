@@ -9,6 +9,7 @@ import { BuyProductPage } from './buy-product.page';
 import { MatAutocompleteModule, MatFormFieldModule, MatOptionModule, MatInputModule, MatSelectModule } from '@angular/material';
 import { AutoCompleteModule } from 'ionic4-auto-complete';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { CurrencyMaskModule } from 'ng2-currency-mask';
 
 const routes: Routes = [
   {
@@ -30,7 +31,8 @@ const routes: Routes = [
     MatSelectModule,
     MatInputModule,
     AutoCompleteModule,
-    ScrollingModule
+    ScrollingModule,
+    CurrencyMaskModule
   ],
   declarations: [BuyProductPage]
 })

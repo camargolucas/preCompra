@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { ProdutoComprado } from 'src/app/model/produtoComprado';
 import { Injectable } from '@angular/core';
 import { Storage } from "@ionic/storage";
@@ -7,7 +8,7 @@ import { Storage } from "@ionic/storage";
 })
 export class StoragePurchasedService {
 	key: string = "ProdutoComprado"
-	constructor(private storage: Storage) { }
+	constructor(private storage: Storage, private datePipe: DatePipe) { }
 
 
 	// ##########################################
@@ -17,19 +18,22 @@ export class StoragePurchasedService {
 	}
 
 	public insert(data: ProdutoComprado) {
-		let arrResult: Array<ProdutoComprado> = []
+		let id = this.datePipe.transform(new Date(), "ddMMyyyyHHmmss");
+		data['idComprado'] = id;
+
+		let arrResult: Array<ProdutoComprado> = [];
 
 		return this.get()
 			.then(result => {
 				if (result) {
-					arrResult = result
-					arrResult.push(data)
-					console.log(arrResult)
-					return this.update(arrResult)
+					arrResult = result;
+					arrResult.push(data);
+
+					return this.update(arrResult);
 				} else {
-					arrResult.push(data)
-					console.log(arrResult)
-					return this.update(arrResult)
+					arrResult.push(data);
+
+					return this.update(arrResult);
 				}
 			})
 			.catch((err) => {

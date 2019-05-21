@@ -7,6 +7,10 @@ ion-title {
     position: relative;
 }
 
+.col-unidade {
+    font-weight: 650;
+}
+
 .title-item {
     font-size: 14px;
     margin-bottom: -13px;
@@ -15,6 +19,16 @@ ion-title {
     ion-col {
         color: var(--ion-color-primary);
     }
+}
+
+.example-viewport {
+    height: 200px;
+    width: 200px;
+    border: 1px solid black;
+}
+
+.example-item {
+    height: 50px;
 }
 
 ion-item-option {
