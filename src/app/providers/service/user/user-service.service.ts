@@ -3,18 +3,20 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { tap } from "rxjs/operators";
 import { Observable } from 'rxjs';
+import { Util } from 'src/app/util/util';
 
 @Injectable({
   providedIn: "root"
 })
-export class UserServiceService {
-  API_URL: string = "http://apprequestapi.kinghost.net:21093/";
-  //API_URL: string = "http://localhost:21093/"
+export class UserServiceService extends Util {
+
   constructor(public http: HttpClient) {
+    super()
   }
 
+
   getUser(data): Observable<Usuario[]> {
-    const dataStr = JSON.stringify(data);
+    let dataStr = JSON.stringify(data);
     return this.http
       .get<Usuario[]>(this.API_URL + "users/get/" + encodeURI(dataStr))
       .pipe(tap(console.log));

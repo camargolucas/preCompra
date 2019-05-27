@@ -2,6 +2,8 @@ import { Unidade } from './../model/unidade';
 
 export class Util {
 
+    //API_URL: string = "http://apprequestapi.kinghost.net:21093/"
+    API_URL: string = "http://localhost:21093/"
 
     unidade: Unidade[] = [
         {
@@ -24,7 +26,7 @@ export class Util {
             tipo: 'Unidade',
             value: 'un'
         } */
-    ]
+    ];
 
     validation_messages = {
         'fornecedor': [

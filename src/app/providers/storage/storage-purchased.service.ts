@@ -21,6 +21,7 @@ export class StoragePurchasedService {
 		let id = this.datePipe.transform(new Date(), "ddMMyyyyHHmmss");
 		data['idComprado'] = id;
 
+
 		let arrResult: Array<ProdutoComprado> = [];
 
 		return this.get()
@@ -29,11 +30,11 @@ export class StoragePurchasedService {
 					arrResult = result;
 					arrResult.push(data);
 
-					return this.update(arrResult);
+					return this.set(arrResult);
 				} else {
 					arrResult.push(data);
 
-					return this.update(arrResult);
+					return this.set(arrResult);
 				}
 			})
 			.catch((err) => {
@@ -41,8 +42,38 @@ export class StoragePurchasedService {
 			})
 	}
 
-	public update(data: ProdutoComprado[]) {
+	public set(data: ProdutoComprado[]) {
 		return this.storage.set(this.key, data);
 	}
+
+	public async delete(id: any) {
+
+		await this.get()
+			.then(result => {
+
+				let index = result.findIndex(x => x.idComprado === id);
+				if (index !== undefined) result.splice(index, 1);
+
+				this.set(result);
+
+			})
+			.catch(err => console.log(err))
+	}
+
+	public async update(produtoComprado: ProdutoComprado) {
+		await this.get()
+			.then(result => {
+
+				let index = result.findIndex(x => x.idComprado === produtoComprado.id);
+				if (index !== undefined) result.splice(index, 1);
+
+				result.push(produtoComprado);
+
+				this.set(result);
+
+			})
+	}
+
+
 
 }

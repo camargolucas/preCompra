@@ -34,9 +34,9 @@ export class BuyProductPage implements OnInit {
   formProduct: FormGroup;
   validationMessages: any;
   fornecedorFormControl = new FormControl();
-  items
   options: string[] = [];
   filteredOptions: Observable<string[]>;
+  edit: boolean
 
   constructor(public nav: NavParams, public modal: ModalController, public util: Util,
     public storagePurchased: StoragePurchasedService, private storage: StorageService, private toast: ToastController) {
@@ -47,7 +47,18 @@ export class BuyProductPage implements OnInit {
   }
 
   ngOnInit() {
-    this.produto = this.nav.data['produto'];
+
+
+    if (this.nav.data['produto']['idComprado']) {
+      this.produtoComprado = this.nav.data['produto']
+      this.edit = true;
+    } else {
+      this.produto = this.nav.data['produto'];
+      this.produtoComprado['id'] = this.produto['id'];
+      this.produtoComprado['nome'] = this.produto['nome'];
+      this.edit = false;
+    }
+
     this.unidades = this.util.getUnidades();
     this.validationMessages = this.util.getMessages();
 
@@ -90,23 +101,38 @@ export class BuyProductPage implements OnInit {
 
   }
 
+  insert() {
+    this.storagePurchased.insert(this.produtoComprado)
+      .then((result) => {
+        this.presentToast('Produto Inserido com sucesso')
+        this.modal.dismiss();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
   save() {
-
     if (this.verifyFields()) {
-
-      this.produtoComprado['id'] = this.produto['id'];
-      this.produtoComprado['nome'] = this.produto['nome'];
-
-      this.storagePurchased.insert(this.produtoComprado)
-        .then((result) => {
-          this.modal.dismiss();
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      if (this.edit) {
+        this.update();
+      } else {
+        this.insert();
+      }
     } else {
       this.presentToast('Preencha todos os campos');
     }
+  }
+
+  update() {
+    this.storagePurchased.update(this.produtoComprado)
+      .then((x => {
+        this.presentToast('Produto Atualizado com sucesso');
+        this.modal.dismiss();
+      }))
+      .catch((err => {
+        this.presentToast('Houve um problema, tente novamente mais tarde');
+      }))
   }
 
   setDisabled(unidade): boolean {

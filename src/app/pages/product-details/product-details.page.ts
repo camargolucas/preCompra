@@ -1,4 +1,4 @@
-import { ModalController } from '@ionic/angular';
+import { ModalController, ToastController } from '@ionic/angular';
 import { Produto } from 'src/app/model/produto';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
@@ -19,13 +19,13 @@ export class ProductDetailsPage implements OnInit {
   valorTotal: number;
 
   constructor(private route: ActivatedRoute, private storage: StoragePurchasedService,
-    private modalController: ModalController) {
+    private modalController: ModalController, private toast: ToastController) {
 
   }
 
   ngOnInit() {
     this.getDataRoute();
-    this.filterByNameAndUnd();
+    this.loadProductData();
   }
 
 
@@ -40,12 +40,19 @@ export class ProductDetailsPage implements OnInit {
     return await modal.present();
   }
 
-  edit(id) {
-
+  edit(produto: ProdutoComprado) {
+    this.openModal(produto)
   }
 
-  remove(id) {
+  async remove(produto: ProdutoComprado) {
 
+    let id = produto['idComprado'];
+    await this.storage.delete(id)
+      .then((result => {
+        this.presentToast('Deletado com sucesso');
+      })).catch((err => console.log(err)));
+
+    await this.loadProductData();
   }
 
   getDataRoute() {
@@ -59,9 +66,9 @@ export class ProductDetailsPage implements OnInit {
 
   }
 
-  filterByNameAndUnd() {
+  async loadProductData() {
 
-    return this.storage.get()
+    await this.storage.get()
       .then(result => {
 
         this.produtos = result.filter(product => {
@@ -70,6 +77,15 @@ export class ProductDetailsPage implements OnInit {
 
         });
       });
+  }
+
+
+  async presentToast(message: string) {
+    const toast = await this.toast.create({
+      message: message,
+      duration: 3000
+    });
+    toast.present();
   }
 
 }
