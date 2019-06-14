@@ -4,13 +4,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
-
+import { NgxCurrencyModule } from "ngx-currency";
 import { BuyProductPage } from './buy-product.page';
 import { MatAutocompleteModule, MatFormFieldModule, MatOptionModule, MatInputModule, MatSelectModule } from '@angular/material';
 import { AutoCompleteModule } from 'ionic4-auto-complete';
 import { ScrollingModule } from '@angular/cdk/scrolling';
-import { CurrencyMaskModule } from 'ng2-currency-mask';
-
+import { BrMaskerModule } from 'brmasker-ionic-3';
 const routes: Routes = [
   {
     path: '',
@@ -32,7 +31,9 @@ const routes: Routes = [
     MatInputModule,
     AutoCompleteModule,
     ScrollingModule,
-    CurrencyMaskModule
+    BrMaskerModule,
+    NgxCurrencyModule
+
   ],
   declarations: [BuyProductPage]
 })

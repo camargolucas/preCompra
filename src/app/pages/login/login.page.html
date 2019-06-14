@@ -4,7 +4,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content>
 
   <ion-item-group>
 
@@ -20,9 +20,15 @@
     </ion-item>
     <br>
     <br>
-    <ion-button (click)="login()">Entrar </ion-button>
+    <div>
+      <ion-button (click)="login()" [disabled]="enterButton">Entrar </ion-button>
+    </div>
   </ion-item-group>
 
 
 
 </ion-content>
+
+<ion-footer>
+
+</ion-footer>

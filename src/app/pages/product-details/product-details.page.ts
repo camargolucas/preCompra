@@ -1,11 +1,13 @@
-import { ModalController, ToastController } from '@ionic/angular';
+import { ModalController, ToastController, NavController } from '@ionic/angular';
 import { Produto } from 'src/app/model/produto';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { NavParams } from '@ionic/angular';
 import { StoragePurchasedService } from 'src/app/providers/storage/storage-purchased.service';
 import { ProdutoComprado } from 'src/app/model/produtoComprado';
 import { BuyProductPage } from '../buy-product/buy-product.page';
+import { observe } from 'rxjs-observe';
+
 
 @Component({
   selector: 'app-product-details',
@@ -17,17 +19,34 @@ export class ProductDetailsPage implements OnInit {
   produtos: ProdutoComprado[] = [];
   qtdTotal: number;
   valorTotal: number;
-
+  instance = { name: "Alice" };
   constructor(private route: ActivatedRoute, private storage: StoragePurchasedService,
-    private modalController: ModalController, private toast: ToastController) {
+    private modalController: ModalController, private toast: ToastController,
+    private router: Router, public navCtrl: NavController) {
 
   }
+
+
 
   ngOnInit() {
     this.getDataRoute();
+  }
+
+  ionViewWillEnter() {
     this.loadProductData();
   }
 
+
+  goToProductDetail(produto: Produto) {
+    let product = JSON.stringify(produto);
+
+    let navExtras: NavigationExtras = {
+      queryParams: {
+        'produto': product,
+      }
+    };
+    this.router.navigate(["/buy-product"], navExtras);
+  }
 
   async openModal(produto: Produto) {
     const modal = await this.modalController.create({
@@ -41,7 +60,7 @@ export class ProductDetailsPage implements OnInit {
   }
 
   edit(produto: ProdutoComprado) {
-    this.openModal(produto)
+    this.openModal(produto);
   }
 
   async remove(produto: ProdutoComprado) {
@@ -58,27 +77,38 @@ export class ProductDetailsPage implements OnInit {
   getDataRoute() {
     return this.route.queryParams.subscribe(result => {
       this.produto = JSON.parse(result['produto']);
-
     });
-  }
-
-  sumTotal(produto) {
-
   }
 
   async loadProductData() {
 
     await this.storage.get()
       .then(result => {
-
-        this.produtos = result.filter(product => {
-
-          return (product['nome'] === this.produto['nome']);
-
+        this.storage.ProdutosComprados = result.filter(product => {
+          return (product['nome'] === this.produto['nome'] && product['unidade'] === this.produto['unidade']);
         });
       });
   }
 
+  sumValor(): number {
+    var initialValue = 0;
+    var sum = this.storage.ProdutosComprados.reduce(function (accumulator, currentValue) {
+      return accumulator + currentValue.valor;
+    }, initialValue);
+    return sum;
+  }
+
+  sumPeso(): number {
+
+    var initialValue = 0;
+    var sum = this.storage.ProdutosComprados.reduce(function (accumulator, currentValue) {
+      if (currentValue.unidadeComprada === 'Caixa') return accumulator + (currentValue.peso * currentValue.qtd);
+      else return accumulator + currentValue.qtd;
+    }, initialValue);
+
+    return sum;
+
+  }
 
   async presentToast(message: string) {
     const toast = await this.toast.create({

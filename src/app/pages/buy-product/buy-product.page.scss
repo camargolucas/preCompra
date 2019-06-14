@@ -2,7 +2,7 @@
 $fontsize:13px;
 
 .label-product {
-    font-size: 15px;
+    font-size: 16px;
     text-align: center !important;
 }
 
@@ -82,4 +82,16 @@ ion-input {
     margin: 5px;
     margin-left: 15px;
 
+}
+
+.buttons-save-cancel {
+    display: flex;
+    width: 100%;
+    padding: 10px;
+
+
+    ion-button {
+        font-size: 11px;
+        padding-right: 20px;
+    }
 }

@@ -1,3 +1,4 @@
+import { StoragePurchasedService } from './providers/storage/storage-purchased.service';
 import { Component } from '@angular/core';
 
 import { Platform } from '@ionic/angular';
@@ -12,9 +13,16 @@ export class AppComponent {
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    private storagePurchased: StoragePurchasedService
   ) {
     this.initializeApp();
+    this.storagePurchased.get()
+      .then((value) => {
+        if (value !== null) this.storagePurchased.ProdutosComprados = value
+        else this.storagePurchased.ProdutosComprados = [];
+
+      });
   }
 
   initializeApp() {

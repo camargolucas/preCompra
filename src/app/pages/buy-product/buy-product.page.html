@@ -1,16 +1,25 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="app/tabs/tab2"></ion-back-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+
 <ion-content padding>
 
     <ion-item lines="none" class="label-product">
-        <ion-label color="primary">{{ produto.nome }} </ion-label>
+        <ion-label color="primary"> {{ PRODUCT_NAME }} </ion-label>
         <ion-icon color="primary" name="nutrition"></ion-icon>
     </ion-item>
 
     <div>
         <div>
-
             <mat-form-field class="example-full-width">
-                <input matInput type="text" placeholder="Digite o fornecedor" [formControl]="fornecedorFormControl"
-                    [matAutocomplete]="auto" [(ngModel)]="produtoComprado.fornecedor">
+                <input matInput maxlength="40" type="text" placeholder="Digite o fornecedor"
+                    [formControl]="fornecedorFormControl" [matAutocomplete]="auto"
+                    [(ngModel)]="produtoComprado.fornecedor">
                 <mat-autocomplete color="primary" #auto="matAutocomplete">
 
                     <mat-option class="example-item" *ngFor="let option of filteredOptions | async | slice:0:9 "
@@ -36,8 +45,9 @@
                 <div>
                     <ion-item lines="inset">
                         <ion-label position="stacked">Unidade</ion-label>
-                        <ion-select (ionChange)="setDisabled(produtoComprado.unidade)"
-                            [(ngModel)]="produtoComprado.unidade" placeholder="unidade" formControlName="unidade">
+                        <ion-select (ionChange)="setDisabled(produtoComprado.unidadeComprada)"
+                            [(ngModel)]="produtoComprado.unidadeComprada" placeholder="unidade"
+                            formControlName="unidade">
                             <ion-select-option *ngFor="let unidade of unidades" value="{{unidade.tipo}}">
                                 {{unidade.tipo}}
                             </ion-select-option>
@@ -76,7 +86,7 @@
             <div>
                 <ion-item [disabled]="disabled" lines="inset">
                     <ion-label position="stacked">Peso</ion-label>
-                    <ion-input [(ngModel)]="produtoComprado.peso" type="text" placeholder="peso" value="1"
+                    <ion-input [(ngModel)]="produtoComprado.peso" type="number" placeholder="peso" value="1"
                         formControlName="peso"></ion-input>
                 </ion-item>
             </div>
@@ -107,15 +117,17 @@
             </div>
         </div>
     </form>
-    <div>
-        <ion-item lines="none">
-            <ion-button (click)="cancel()" fill="outline" slot="end" color="primary" shape="round">
+    <div class="buttons-save-cancel">
+        <div>
+            <ion-button (click)="cancel()" fill="outline" slot="end" color="primary" shape="round" size="default">
                 Cancelar
             </ion-button>
-            <ion-button [disabled]="formProduct.invalid" (click)="save()" slot="end" color="primary" shape="round">
+        </div>
+        <div>
+            <ion-button #ionButton [disabled]="formProduct.invalid" (click)="save()" slot="end" color="primary"
+                shape="round" size="default">
                 Salvar
             </ion-button>
-        </ion-item>
+        </div>
     </div>
-
 </ion-content>

@@ -1,5 +1,6 @@
 <ion-header>
   <ion-toolbar>
+    <ion-title>Produtos Comprados</ion-title>
     <ion-buttons slot="start">
       <ion-back-button defaultHref="app/tabs/tab2"></ion-back-button>
     </ion-buttons>
@@ -11,17 +12,17 @@
     <h2>{{produto.nome}}</h2>
   </ion-text>
 
-  <ion-card *ngFor="let produto of produtos">
+  <ion-card *ngFor="let produto of storage.ProdutosComprados">
     <ion-card-header>
       <div class="card-header">
         <div class="card-title">
-          <ion-card-title>
+          <ion-card-title color="primary">
             {{produto.fornecedor}}
           </ion-card-title>
         </div>
         <div class="card-edit-remove">
           <div class="card-edit">
-            <ion-button (click)="edit(produto)" fill="clear" shape="round" size="small">
+            <ion-button (click)="goToProductDetail(produto)" fill="clear" shape="round" size="small">
               <ion-icon name="create"></ion-icon>
             </ion-button>
           </div>
@@ -36,29 +37,30 @@
     <ion-card-content>
       <div class="div-chip-qtd-peso">
         <div class="chip-qtd">
-          <ion-chip name="chip-qtd" color="primary" outline>{{produto.qtd}} {{produto.unidade}}</ion-chip>
+          <ion-chip name="chip-qtd" color="dark" outline>{{produto.qtd}} {{produto.unidadeComprada}}</ion-chip>
         </div>
-        <div *ngIf="produto.unidade !== 'Kilo' ">
-          <ion-chip name="chip-peso" color="primary" outline>{{produto.peso}} kg</ion-chip>
+        <div *ngIf="produto.unidadeComprada !== 'Kilo' ">
+          <ion-chip name="chip-peso" color="dark" outline>{{produto.peso}} kg</ion-chip>
         </div>
       </div>
       <div class="chip-valor">
-        <ion-chip name="chip-valor" color="primary" outline>{{produto.valor | currency}}</ion-chip>
+        <ion-chip name="chip-valor" color="dark" outline>{{produto.valor | currency}}</ion-chip>
       </div>
     </ion-card-content>
   </ion-card>
 </ion-content>
-
-
-<ion-footer translucent="true">
-  <ion-toolbar>
+<ion-footer mode="ios" translucent="true">
+  <ion-toolbar color="primary">
     <div class="footer-item">
       <div class="footer-produto-qtd">
-        <ion-text><span>200 </span></ion-text>
+        <ion-text><span>{{ sumPeso() }} kg </span></ion-text>
       </div>
-      <div class="footer-produto-valor">
-        <ion-text><span>{{100 | currency}}</span></ion-text>
-      </div>
+      <!-- <div class="footer-produto-total">
+        <ion-text>Total</ion-text>
+      </div> -->
+      <!-- <div class="footer-produto-valor">
+        <ion-text><span>{{ sumValor() | currency}}</span></ion-text>
+      </div> -->
     </div>
   </ion-toolbar>
 </ion-footer>

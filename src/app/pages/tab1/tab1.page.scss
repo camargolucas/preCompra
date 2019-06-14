@@ -1,0 +1,13 @@
+ion-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    min-height: 80%;
+}
+
+
+
+ion-ripple-effect {
+    color: var(--ion-color-primary);
+}

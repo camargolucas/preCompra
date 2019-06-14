@@ -1,4 +1,4 @@
-import { ModalController } from '@ionic/angular';
+import { ModalController, LoadingController, AlertController } from '@ionic/angular';
 import { ProdutoComprado } from './../../model/produtoComprado';
 import { Usuario } from 'src/app/model/usuario';
 
@@ -10,6 +10,7 @@ import { Component, OnInit, ViewChild } from "@angular/core";
 import { BuyProductPage } from '../buy-product/buy-product.page';
 import { ProductServiceService } from 'src/app/providers/service/product/product-service.service';
 import { StorageService } from 'src/app/providers/storage/storage.service';
+import { StoragePurchasedService } from 'src/app/providers/storage/storage-purchased.service';
 @Component({
   selector: "app-tab2",
   templateUrl: "./tab2.page.html",
@@ -20,16 +21,24 @@ export class Tab2Page implements OnInit {
   produtos: Produto[];
   terms: string = "";
   usuario: Usuario
+  loading: any;
+  segmentValue = "F";
 
   @ViewChild("searchbar") searchbar;
 
-  constructor(public service: ProductServiceService, private router: Router, private modalController: ModalController, private storage: StorageService) {
+  constructor(public service: ProductServiceService, private router: Router, private modalController: ModalController,
+    private storage: StorageService, private storagePurchased: StoragePurchasedService,
+    private loadingController: LoadingController, private apiProduct: ProductServiceService,
+    private alertController: AlertController) {
 
   }
 
   ngOnInit() {
 
     this.getUser();
+  }
+  ionViewCanEnter() {
+    console.log(this.storagePurchased.ProdutosComprados.length);
   }
 
   getUser() {
@@ -44,12 +53,14 @@ export class Tab2Page implements OnInit {
     return this.storage.get('ProdutoPedido').then((result => {
 
       this.filterByType(type, result);
+
     }));
 
   }
 
   filterByType(type: string, arrProdutos) {
-    return this.produtos = arrProdutos.filter(ret => {
+    //this.produtos
+    return this.apiProduct.ProdutoPedido = arrProdutos.filter(ret => {
       return ret['tipo'] === type;
     });
   }
@@ -66,6 +77,7 @@ export class Tab2Page implements OnInit {
   }
 
   goToProductDetail(produto: Produto) {
+
     let product = JSON.stringify(produto);
 
     let navExtras: NavigationExtras = {
@@ -74,6 +86,19 @@ export class Tab2Page implements OnInit {
       }
     };
     this.router.navigate(["/product-details"], navExtras);
+  }
+
+  addProduct(produto: Produto) {
+    let product = JSON.stringify(produto);
+
+    let navExtras: NavigationExtras = {
+      queryParams: {
+        'produto': product,
+      }
+    };
+
+    this.router.navigate(["/buy-product"], navExtras);
+
   }
 
   goToProduct(produto: Produto) {
@@ -89,4 +114,63 @@ export class Tab2Page implements OnInit {
     this.router.navigate(["/details"], navExtras);
   }
 
+  async presentLoading() {
+    this.loading = await this.loadingController.create({
+      message: 'Atualizando os pedidos, aguarde ...'
+    });
+    await this.loading.present();
+  }
+
+  async dismissLoading() {
+    // this.enableButton();
+    return await this.loading.dismiss();
+  }
+
+  async refresh() {
+    await this.presentLoading();
+    this.apiProduct.getDetailedByGroup(this.usuario['grupoEconomico']).subscribe((result) => {
+      this.storage.update('ProdutoPedido', result).then((value => {
+        this.filterByType(this.segmentValue, value);
+        this.dismissLoading();
+      }));
+    });
+  }
+
+
+  async presentAlertConfirm() {
+    this.finish();
+
+    const alert = await this.alertController.create({
+      header: 'Finalizar',
+      message: 'Message <strong>text</strong>',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+
+          }
+        }, {
+          text: 'Okay',
+          handler: () => {
+
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  finish() {
+
+    console.log(this.storagePurchased.ProdutosComprados);
+    let data: ProdutoComprado
+    //    this.apiProduct.insertProduct(data)
+  }
+
+
 }
+
+

@@ -5,6 +5,7 @@ export class ProdutoComprado extends Produto {
     fornecedor: string;
     valor: number;
     peso: number = 1;
+    unidadeComprada: string;
 
     constructor() {
         super()

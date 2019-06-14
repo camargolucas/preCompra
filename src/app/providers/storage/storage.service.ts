@@ -1,10 +1,12 @@
 
 import { Injectable } from "@angular/core";
 import { Storage } from "@ionic/storage";
+import { Produto } from 'src/app/model/produto';
 @Injectable({
   providedIn: "root"
 })
 export class StorageService {
+  private ProdutoPedido: Array<Produto> = [];
   constructor(private storage: Storage) { }
 
   public save(key: string, data: any) {

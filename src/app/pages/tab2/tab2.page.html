@@ -1,6 +1,11 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Produtos</ion-title>
+    <ion-title>Pedidos</ion-title>
+    <ion-buttons slot="secondary">
+      <ion-button (click)="refresh()" color="primary">
+        <ion-icon class="icon-refresh-toolbar" name="refresh"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -8,7 +13,7 @@
   <ion-searchbar [(ngModel)]="terms" animated placeholder="Pesquise por produto">
   </ion-searchbar>
 
-  <ion-segment (ionChange)="getProducts($event.detail.value)" value="F" padding>
+  <ion-segment [(ngModel)]="segmentValue" (ionChange)="getProducts($event.detail.value)" value="segmentValue" padding>
     <ion-segment-button value="F">
       <ion-label>Frutas</ion-label>
     </ion-segment-button>
@@ -22,39 +27,37 @@
 
   <ion-card>
     <ion-item class="title-item" lines="none">
-      <ion-grid>
-        <ion-row>
-          <ion-col size="7">
-            Nome
-          </ion-col>
-          <ion-col align="right">
-            Qtd
-          </ion-col>
-          <ion-col align="right">
-            Unidade
-          </ion-col>
-        </ion-row>
-      </ion-grid>
+      <div class="title-item">
+        <div class="title-nome">
+          <ion-text color="primary"> Nome</ion-text>
+        </div>
+
+        <div class="title-qtd">
+          <ion-text color="primary">Qtd</ion-text>
+        </div>
+
+        <div class="title-und">
+          <ion-text color="primary">Unidade</ion-text>
+        </div>
+      </div>
     </ion-item>
     <br>
-    <div *ngFor="let produto of produtos | search:terms">
-      <ion-list>
+    <ion-list>
+      <div *ngFor="let produto of apiProduct.ProdutoPedido | search:terms">
         <ion-item-sliding>
-          <ion-item lines="none" (click)="openModal(produto)" class="product-columns">
-            <ion-grid>
-              <ion-row class="ion-activatable">
-                <ion-ripple-effect></ion-ripple-effect>
-                <ion-col class="item-col-nome" size="7">
-                  <ion-text> {{ produto.nome }} </ion-text>
-                </ion-col>
-                <ion-col align="right">
-                  <ion-text> {{produto.qtd}}</ion-text>
-                </ion-col>
-                <ion-col class="col-unidade" align="right">
-                  <ion-text>{{produto.unidade}}</ion-text>
-                </ion-col>
-              </ion-row>
-            </ion-grid>
+          <ion-item class="ion-activatable" lines="none" (click)="addProduct(produto)" detail>
+            <ion-ripple-effect></ion-ripple-effect>
+            <div class="produto-item">
+              <div class="produto-item-nome">
+                {{ produto.nome }}
+              </div>
+              <div class="produto-item-qtd">
+                {{ produto.qtd }}
+              </div>
+              <div class="produto-item-und">
+                {{ produto.unidade }}
+              </div>
+            </div>
           </ion-item>
           <ion-item-options (ionSwipe)="goToProductDetail(produto)">
             <ion-item-option (click)="goToProductDetail(produto)" expandable="true" color="primary">
@@ -63,10 +66,15 @@
             </ion-item-option>
           </ion-item-options>
         </ion-item-sliding>
-      </ion-list>
-    </div>
+      </div>
+    </ion-list>
   </ion-card>
 
-
+  <ion-fab (click)="presentAlertConfirm()" *ngIf="storagePurchased.ProdutosComprados.length" vertical="bottom"
+    horizontal="end" slot="fixed">
+    <ion-fab-button>
+      <ion-icon name="checkmark"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 
 </ion-content>

@@ -1,3 +1,5 @@
+import { NativeKeyboard } from '@ionic-native/native-keyboard/ngx';
+import { Keyboard } from '@ionic-native/keyboard/ngx';
 import { DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Util } from './util/util';
@@ -24,8 +26,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AutoCompleteModule } from 'ionic4-auto-complete';
 import { ProductServiceService } from './providers/service/product/product-service.service';
 import { ScrollingModule } from '@angular/cdk/scrolling';
-import { CurrencyMaskModule } from "ng2-currency-mask";
-
+import { NgxCurrencyModule } from "ngx-currency";
+import { BrMaskerModule } from 'brmasker-ionic-3';
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -48,7 +50,10 @@ import { CurrencyMaskModule } from "ng2-currency-mask";
     FormsModule,
     AutoCompleteModule,
     ScrollingModule,
-    CurrencyMaskModule
+    BrMaskerModule,
+    NgxCurrencyModule
+
+
 
   ],
   providers: [
@@ -57,7 +62,9 @@ import { CurrencyMaskModule } from "ng2-currency-mask";
     [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
     ProductServiceService,
     Util,
-    DatePipe
+    DatePipe,
+    Keyboard,
+    NativeKeyboard
   ],
   bootstrap: [AppComponent]
 })
