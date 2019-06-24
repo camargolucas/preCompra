@@ -1,3 +1,5 @@
+import { UserServiceService } from '../providers/service/user/user-service.service';
+
 export class Usuario {
   idUsuario: number;
   nomeUsuario: string;
@@ -9,4 +11,7 @@ export class Usuario {
   apelidoUsuario: string;
   token: string;
   logado: number;
+
 }
+
+

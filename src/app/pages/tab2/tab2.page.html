@@ -13,7 +13,7 @@
   <ion-searchbar [(ngModel)]="terms" animated placeholder="Pesquise por produto">
   </ion-searchbar>
 
-  <ion-segment [(ngModel)]="segmentValue" (ionChange)="getProducts($event.detail.value)" value="segmentValue" padding>
+  <ion-segment [(ngModel)]="segmentValue" (ionChange)="getProducts($event.detail.value)" value="segmentValue">
     <ion-segment-button value="F">
       <ion-label>Frutas</ion-label>
     </ion-segment-button>
@@ -28,6 +28,7 @@
   <ion-card>
     <ion-item class="title-item" lines="none">
       <div class="title-item">
+
         <div class="title-nome">
           <ion-text color="primary"> Nome</ion-text>
         </div>
@@ -39,6 +40,7 @@
         <div class="title-und">
           <ion-text color="primary">Unidade</ion-text>
         </div>
+
       </div>
     </ion-item>
     <br>

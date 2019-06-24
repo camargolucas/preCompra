@@ -65,7 +65,6 @@ export class BuyProductPage implements OnInit {
       produtoJson = JSON.parse(result['produto']);
       this.PRODUCT_NAME = produtoJson['nome'];
 
-
       if (produtoJson['idComprado']) {
         this.produtoComprado = produtoJson;
         this.edit = true;
@@ -73,9 +72,11 @@ export class BuyProductPage implements OnInit {
 
       } else {
 
-        this.produtoComprado.id = produtoJson['id'];
-        this.produtoComprado.nome = produtoJson['nome'];
-        this.produtoComprado.unidade = produtoJson['unidade'];
+        this.produtoComprado['id'] = produtoJson['id'];
+        this.produtoComprado['nome'] = produtoJson['nome'];
+        this.produtoComprado['unidade'] = produtoJson['unidade'];
+        this.produtoComprado['idPedido'] = produtoJson['idPedido'];
+
         this.edit = false;
       }
     });
@@ -144,7 +145,7 @@ export class BuyProductPage implements OnInit {
   insert() {
     this.storagePurchased.insert(this.produtoComprado)
       .then((result) => {
-        console.log(this.produtoComprado)
+
         this.presentToast('Produto Inserido com sucesso');
         this.dismissLoading();
         this.nav.pop();

@@ -1,3 +1,4 @@
+import { StorageService } from './providers/storage/storage.service';
 import { StoragePurchasedService } from './providers/storage/storage-purchased.service';
 import { Component } from '@angular/core';
 
@@ -14,19 +15,28 @@ export class AppComponent {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    private storagePurchased: StoragePurchasedService
+    private storagePurchased: StoragePurchasedService,
+    private storage: StorageService
   ) {
     this.initializeApp();
-    this.storagePurchased.get()
-      .then((value) => {
-        if (value !== null) this.storagePurchased.ProdutosComprados = value
-        else this.storagePurchased.ProdutosComprados = [];
-
-      });
   }
 
   initializeApp() {
     this.platform.ready().then(() => {
+
+      this.storagePurchased.get()
+        .then((value) => {
+          if (value !== null) this.storagePurchased.ProdutosComprados = value
+          else this.storagePurchased.ProdutosComprados = [];
+
+        });
+
+      this.storage.get('Usuario')
+        .then((value => {
+          if (value !== null) this.storage.usuario = value;
+        }))
+
+
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });

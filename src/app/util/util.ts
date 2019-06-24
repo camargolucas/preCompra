@@ -1,21 +1,6 @@
 import { Unidade } from './../model/unidade';
-import { RequestOptions, Headers } from "@angular/http";
+
 export class Util {
-
-    readonly requestOptions: any;
-    readonly API_URL: string = "http://apprequestapi.kinghost.net:21093/"
-    //readonly API_URL = "http://localhost:21093/"
-
-    private headers;
-
-    constructor() {
-        this.headers = new Headers();
-        this.headers.append("Accept", "application/json");
-        this.headers.append("Content-Type", "application/json");
-        this.headers.append("Access-Control-Allow-Origin", "*");
-
-        this.requestOptions = new RequestOptions({ headers: this.headers });
-    }
 
     unidade: Unidade[] = [
         {

@@ -138,7 +138,7 @@ export class Tab2Page implements OnInit {
 
 
   async presentAlertConfirm() {
-    this.finish();
+
 
     const alert = await this.alertController.create({
       header: 'Finalizar',
@@ -154,7 +154,7 @@ export class Tab2Page implements OnInit {
         }, {
           text: 'Okay',
           handler: () => {
-
+            this.finish();
           }
         }
       ]
@@ -165,12 +165,15 @@ export class Tab2Page implements OnInit {
 
   finish() {
 
-    console.log(this.storagePurchased.ProdutosComprados);
-    let data: ProdutoComprado
-    //    this.apiProduct.insertProduct(data)
+    this.buildJson(this.storagePurchased.ProdutosComprados);
+    // this.apiProduct.insertCompra(this.storagePurchased.ProdutosComprados);
+
+  }
+
+  buildJson(arr: Array<ProdutoComprado>) {
+
+
   }
 
 
 }
-
-

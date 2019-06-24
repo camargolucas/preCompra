@@ -1,3 +1,5 @@
+import { StorageService } from 'src/app/providers/storage/storage.service';
+import { ApiConfig } from './../../../util/api-config';
 import { Usuario } from "src/app/model/usuario";
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
@@ -8,10 +10,10 @@ import { Util } from 'src/app/util/util';
 @Injectable({
   providedIn: "root"
 })
-export class UserServiceService extends Util {
+export class UserServiceService extends ApiConfig {
 
-  constructor(public http: HttpClient) {
-    super()
+  constructor(public http: HttpClient, storage: StorageService) {
+    super();
   }
 
 

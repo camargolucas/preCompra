@@ -1,3 +1,4 @@
+import { Usuario } from 'src/app/model/usuario';
 
 import { Injectable } from "@angular/core";
 import { Storage } from "@ionic/storage";
@@ -7,6 +8,7 @@ import { Produto } from 'src/app/model/produto';
 })
 export class StorageService {
   private ProdutoPedido: Array<Produto> = [];
+  public usuario: Usuario;
   constructor(private storage: Storage) { }
 
   public save(key: string, data: any) {

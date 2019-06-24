@@ -8,7 +8,7 @@ export class ProdutoComprado extends Produto {
     unidadeComprada: string;
 
     constructor() {
-        super()
+        super();
     }
 }
 

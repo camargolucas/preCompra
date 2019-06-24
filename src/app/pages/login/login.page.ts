@@ -56,7 +56,7 @@ export class LoginPage implements OnInit {
 
   keyboard() {
     if (this.keybd.isVisible) {
-      this.showToast('open')
+      this.showToast('open');
       return true;
     } else {
 
@@ -71,7 +71,7 @@ export class LoginPage implements OnInit {
     await this.presentLoading();
 
     let userLogin = {
-      login: this.username.value,/////////////////////////
+      login: this.username.value,
       password: this.password.value,
       UUID: 'UUID'
     };
@@ -98,6 +98,8 @@ export class LoginPage implements OnInit {
   fillStorageFunctions(user) {
     this.fillStorageRequestedProducts(user['grupoEconomico']);
     this.fillStorageSuppliers();
+
+    this.storage.usuario = user;
     this.storage.save('Usuario', user);
   }
 

@@ -19,7 +19,7 @@ export class ProductDetailsPage implements OnInit {
   produtos: ProdutoComprado[] = [];
   qtdTotal: number;
   valorTotal: number;
-  instance = { name: "Alice" };
+
   constructor(private route: ActivatedRoute, private storage: StoragePurchasedService,
     private modalController: ModalController, private toast: ToastController,
     private router: Router, public navCtrl: NavController) {
@@ -85,7 +85,7 @@ export class ProductDetailsPage implements OnInit {
     await this.storage.get()
       .then(result => {
         this.storage.ProdutosComprados = result.filter(product => {
-          return (product['nome'] === this.produto['nome'] && product['unidade'] === this.produto['unidade']);
+          return (product['idPedido'] === this.produto['idPedido']);
         });
       });
   }
