@@ -14,6 +14,7 @@ import { startWith, map } from 'rxjs/operators';
 import { MatAutocompleteTrigger, MatAutocomplete } from '@angular/material';
 import { Route } from '@angular/compiler/src/core';
 import { ActivatedRoute } from '@angular/router';
+import { ProdutoCompradoLista } from 'src/app/model/produtoCompradoLista';
 
 
 @Component({
@@ -44,10 +45,20 @@ export class BuyProductPage implements OnInit {
   PRODUCT_NAME: string;
   loading: any;
   disable;
+  produtoCompradoLista: ProdutoCompradoLista = new ProdutoCompradoLista;
 
-  constructor(private nav: NavController, public route: ActivatedRoute, public modal: ModalController, public util: Util,
-    public storagePurchased: StoragePurchasedService, private storage: StorageService, private toast: ToastController
-    , private loadingController: LoadingController, private navCtrl: NavController) {
+
+  constructor(private nav: NavController,
+    public route: ActivatedRoute,
+    public modal: ModalController,
+    public util: Util,
+    public storagePurchased: StoragePurchasedService,
+    private storage: StorageService,
+    private toast: ToastController
+    , private loadingController: LoadingController,
+    private navCtrl: NavController) {
+
+    this.produtoCompradoLista.ProdutoComprado = [];
 
     this.storage.get('ClienteFornecedor').then((result => {
       this.options = result;
@@ -143,14 +154,21 @@ export class BuyProductPage implements OnInit {
   }
 
   insert() {
-    this.storagePurchased.insert(this.produtoComprado)
+
+    this.produtoCompradoLista.idPedido = this.produtoComprado.idPedido;
+    this.produtoCompradoLista.ProdutoComprado.push(this.produtoComprado);
+
+
+    this.storagePurchased.insert(this.produtoCompradoLista)
       .then((result) => {
 
         this.presentToast('Produto Inserido com sucesso');
         this.dismissLoading();
         this.nav.pop();
+
       })
       .catch((err) => {
+
         this.dismissLoading();
         this.presentToast('Houve um problema, tente novamente mais tarde');
       });
@@ -158,6 +176,7 @@ export class BuyProductPage implements OnInit {
 
   async save() {
     if (this.verifyFields()) {
+
       await this.disableButton();
       await this.presentLoading();
 
@@ -203,6 +222,5 @@ export class BuyProductPage implements OnInit {
     });
     toast.present();
   }
-
 
 }

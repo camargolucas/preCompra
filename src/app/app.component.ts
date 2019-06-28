@@ -26,8 +26,12 @@ export class AppComponent {
 
       this.storagePurchased.get()
         .then((value) => {
-          if (value !== null) this.storagePurchased.ProdutosComprados = value
-          else this.storagePurchased.ProdutosComprados = [];
+          if (value !== null) {
+            //this.storagePurchased.ProdutosComprados = value
+
+            this.storagePurchased.ProdutosCompradosLista = value;
+          }
+          else this.storagePurchased.ProdutosCompradosLista = [];
 
         });
 

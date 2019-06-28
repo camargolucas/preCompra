@@ -1,3 +1,4 @@
+import { ProdutoCompradoLista } from './../../model/produtoCompradoLista';
 import { DatePipe } from '@angular/common';
 import { ProdutoComprado } from 'src/app/model/produtoComprado';
 import { Injectable } from '@angular/core';
@@ -8,6 +9,7 @@ import { Storage } from "@ionic/storage";
 })
 export class StoragePurchasedService {
 	ProdutosComprados: Array<ProdutoComprado> = [];
+	ProdutosCompradosLista: Array<ProdutoCompradoLista> = [];
 	key: string = "ProdutoComprado"
 	constructor(private storage: Storage, private datePipe: DatePipe) { }
 
@@ -17,25 +19,33 @@ export class StoragePurchasedService {
 		return this.storage.get(this.key);
 	}
 
-	public insert(data: ProdutoComprado) {
+	public insert(data: ProdutoCompradoLista) {
 		let id = this.datePipe.transform(new Date(), "ddMMyyyyHHmmss");
-		data['idComprado'] = id;
-
-
-		//let arrResult: Array<ProdutoComprado> = [];
+		data['ProdutoComprado'][0]['idComprado'] = id;
 
 		return this.get()
 			.then(result => {
+
 				if (result) {
+					for (let index = 0; index < result.length; index++) {
+						if (result[index]['idPedido'] === data['idPedido']) {
+							this.ProdutosCompradosLista = result;
+							this.ProdutosCompradosLista[index]['ProdutoComprado'].push(data['ProdutoComprado'][0])
+							this.set(this.ProdutosCompradosLista);
+							return;
+						}
+					}
 
-					this.ProdutosComprados = result;
-					this.ProdutosComprados.push(data);
+					this.ProdutosCompradosLista = result;
+					this.ProdutosCompradosLista.push(data);
+					/* 	this.ProdutosComprados = result;
+						this.ProdutosComprados.push(data); */
+					return this.set(this.ProdutosCompradosLista);
 
-					return this.set(this.ProdutosComprados);
 				} else {
-					this.ProdutosComprados.push(data);
 
-					return this.set(this.ProdutosComprados);
+					this.ProdutosCompradosLista.push(data);
+					return this.set(this.ProdutosCompradosLista);
 				}
 
 			})
@@ -44,40 +54,41 @@ export class StoragePurchasedService {
 			});
 	}
 
-	public set(data: ProdutoComprado[]) {
+	public set(data: any) {
 		return this.storage.set(this.key, data);
 	}
 
-	public async delete(id: any) {
+	public async delete(produtoComprado: any) {
 
-		await this.get()
-			.then(result => {
+		this.ProdutosCompradosLista.forEach(element => {
+			if (element['idPedido'] === produtoComprado['idPedido']) {
+				element['ProdutoComprado'].findIndex((x, index) => {
+					let _found: boolean = (x['idComprado'] === produtoComprado['idComprado']);
+					if (_found) {
+						element['ProdutoComprado'].splice(index, 1);
+						this.set(this.ProdutosCompradosLista);
+						return true;
+					}
+				})
 
-				let index = result.findIndex(x => x.idComprado === id);
-				if (index !== undefined) result.splice(index, 1);
-
-				this.set(result);
-
-			})
-			.catch(err => console.log(err));
+			}
+		})
 	}
 
-	public async update(produtoComprado: ProdutoComprado) {
-		await this.get()
-			.then(result => {
+	public async update(produtoComprado) {
+		this.ProdutosCompradosLista.forEach(element => {
+			if (element['idPedido'] === produtoComprado['idPedido']) {
+				element['ProdutoComprado'].findIndex((x, index) => {
+					let _found: boolean = (x['idComprado'] === produtoComprado['idComprado']);
+					if (_found) {
+						element['ProdutoComprado'].splice(index, 1);
+						element['ProdutoComprado'].push(produtoComprado);
+						this.set(this.ProdutosCompradosLista);
+						return true;
+					}
+				})
 
-
-				let index = result.findIndex(x => x.idComprado === produtoComprado.idComprado);
-				if (index !== undefined) result.splice(index, 1);
-
-				this.ProdutosComprados = result;
-
-				this.ProdutosComprados.push(produtoComprado);
-
-				this.set(this.ProdutosComprados);
-
-
-			});
+			}
+		});
 	}
-
 }

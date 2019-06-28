@@ -12,7 +12,8 @@
     <h2>{{produto.nome}}</h2>
   </ion-text>
 
-  <ion-card *ngFor="let produto of storage.ProdutosComprados">
+
+  <ion-card *ngFor="let produto of produtos; let i = index">
     <ion-card-header>
       <div class="card-header">
         <div class="card-title">
@@ -48,6 +49,7 @@
       </div>
     </ion-card-content>
   </ion-card>
+
 </ion-content>
 <ion-footer mode="ios" translucent="true">
   <ion-toolbar color="primary">

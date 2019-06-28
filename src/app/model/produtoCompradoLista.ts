@@ -1,6 +1,5 @@
 import { ProdutoComprado } from './produtoComprado';
-export class produtoCompradoLista {
+export class ProdutoCompradoLista {
     idPedido: number;
-    data;
-    ProdutoComprado: ProdutoComprado[];
+    ProdutoComprado: Array<ProdutoComprado>;
 }

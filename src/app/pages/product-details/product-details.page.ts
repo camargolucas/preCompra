@@ -1,3 +1,4 @@
+import { ProdutoCompradoLista } from 'src/app/model/produtoCompradoLista';
 import { ModalController, ToastController, NavController } from '@ionic/angular';
 import { Produto } from 'src/app/model/produto';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
@@ -17,6 +18,7 @@ import { observe } from 'rxjs-observe';
 export class ProductDetailsPage implements OnInit {
   produto: Produto;
   produtos: ProdutoComprado[] = [];
+  produtosLista: ProdutoCompradoLista[] = [];
   qtdTotal: number;
   valorTotal: number;
 
@@ -26,8 +28,6 @@ export class ProductDetailsPage implements OnInit {
 
   }
 
-
-
   ngOnInit() {
     this.getDataRoute();
   }
@@ -36,10 +36,8 @@ export class ProductDetailsPage implements OnInit {
     this.loadProductData();
   }
 
-
   goToProductDetail(produto: Produto) {
     let product = JSON.stringify(produto);
-
     let navExtras: NavigationExtras = {
       queryParams: {
         'produto': product,
@@ -66,7 +64,7 @@ export class ProductDetailsPage implements OnInit {
   async remove(produto: ProdutoComprado) {
 
     let id = produto['idComprado'];
-    await this.storage.delete(id)
+    await this.storage.delete(produto)
       .then((result => {
         this.presentToast('Deletado com sucesso');
       })).catch((err => console.log(err)));
@@ -82,13 +80,21 @@ export class ProductDetailsPage implements OnInit {
 
   async loadProductData() {
 
-    await this.storage.get()
+    let filtered = this.storage.ProdutosCompradosLista.filter(((product, index, arr) => {
+
+      return product['idPedido'] === this.produto.idPedido;
+
+    }));
+
+    this.produtos = filtered[0]['ProdutoComprado'];
+
+/*     await this.storage.get()
       .then(result => {
-        this.storage.ProdutosComprados = result.filter(product => {
+        this.storage.ProdutosCompradosLista = result.filter(product => {
           return (product['idPedido'] === this.produto['idPedido']);
         });
       });
-  }
+ */  }
 
   sumValor(): number {
     var initialValue = 0;
@@ -105,9 +111,7 @@ export class ProductDetailsPage implements OnInit {
       if (currentValue.unidadeComprada === 'Caixa') return accumulator + (currentValue.peso * currentValue.qtd);
       else return accumulator + currentValue.qtd;
     }, initialValue);
-
     return sum;
-
   }
 
   async presentToast(message: string) {
