@@ -68,7 +68,7 @@ export class LoginPage implements OnInit {
 
   async login() {
     await this.disableButton();
-    await this.presentLoading();
+    await this.userService.presentLoading();
 
     let userLogin = {
       login: this.username.value,
@@ -77,22 +77,29 @@ export class LoginPage implements OnInit {
     };
 
 
-    this.userService.loginAuthentication(userLogin).subscribe(result => {
 
-      let status = result['status'];
-      let user = result['userData'][0];
+    this.userService.loginAuthentication(userLogin)
+      .subscribe(result => {
 
-      if (status === 'success') {
-        this.dismissLoading();
-        this.fillStorageFunctions(user);
-        this.router.navigateByUrl("/app/tabs/tab2");
-        this.showToast('Welcome');
+        let status = result['status'];
+        let user = result['userData'][0];
 
-      } else {
-        this.dismissLoading();
-        this.showToast('Houve um problema');
-      }
-    });
+        if (status === 'success') {
+          this.userService.dismissLoading();
+          this.fillStorageFunctions(user);
+
+          this.router.navigateByUrl("/app/tabs/tab2");
+
+
+        } else {
+          this.userService.dismissLoading();
+          this.showToast('Usuario inválido');
+        }
+
+      }, error => {
+        this.enableButton();
+        this.showToast('Houve um problema ao consultar o banco de dados')
+      });
   }
 
   fillStorageFunctions(user) {

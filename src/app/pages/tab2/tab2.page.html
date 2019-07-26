@@ -49,7 +49,7 @@
         <ion-item-sliding>
           <ion-item class="ion-activatable" lines="none" (click)="addProduct(produto)" detail>
             <ion-ripple-effect></ion-ripple-effect>
-            <div class="produto-item">
+            <div [ngClass]="{'changeColor': verifyIfAlreadyBought(produto) }" class="produto-item">
               <div class="produto-item-nome">
                 {{ produto.nome }}
               </div>
@@ -72,7 +72,7 @@
     </ion-list>
   </ion-card>
 
-  <ion-fab (click)="presentAlertConfirm()" *ngIf="storagePurchased.ProdutosComprados.length" vertical="bottom"
+  <ion-fab (click)="presentAlertConfirm()" *ngIf="storagePurchased.ProdutosCompradosLista.length" vertical="bottom"
     horizontal="end" slot="fixed">
     <ion-fab-button>
       <ion-icon name="checkmark"></ion-icon>

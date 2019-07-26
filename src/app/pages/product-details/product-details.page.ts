@@ -80,25 +80,20 @@ export class ProductDetailsPage implements OnInit {
 
   async loadProductData() {
 
-    let filtered = this.storage.ProdutosCompradosLista.filter(((product, index, arr) => {
+    let filtered = await this.storage.ProdutosCompradosLista.filter(((product, index, arr) => {
 
       return product['idPedido'] === this.produto.idPedido;
 
     }));
 
-    this.produtos = filtered[0]['ProdutoComprado'];
+    if (filtered.length) this.produtos = filtered[0]['ProdutoComprado']
+    else this.produtos = [];
 
-/*     await this.storage.get()
-      .then(result => {
-        this.storage.ProdutosCompradosLista = result.filter(product => {
-          return (product['idPedido'] === this.produto['idPedido']);
-        });
-      });
- */  }
+  }
 
   sumValor(): number {
     var initialValue = 0;
-    var sum = this.storage.ProdutosComprados.reduce(function (accumulator, currentValue) {
+    var sum = this.produtos.reduce(function (accumulator, currentValue) {
       return accumulator + currentValue.valor;
     }, initialValue);
     return sum;
@@ -107,9 +102,11 @@ export class ProductDetailsPage implements OnInit {
   sumPeso(): number {
 
     var initialValue = 0;
-    var sum = this.storage.ProdutosComprados.reduce(function (accumulator, currentValue) {
-      if (currentValue.unidadeComprada === 'Caixa') return accumulator + (currentValue.peso * currentValue.qtd);
-      else return accumulator + currentValue.qtd;
+    var sum = this.produtos.reduce(function (accumulator, currentValue) {
+      if (currentValue.unidadeComprada === 'Caixa')
+        return accumulator + (currentValue.peso * currentValue.qtd);
+      else
+        return accumulator + currentValue.qtd;
     }, initialValue);
     return sum;
   }

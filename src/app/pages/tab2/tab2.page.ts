@@ -1,4 +1,4 @@
-import { ModalController, LoadingController, AlertController } from '@ionic/angular';
+import { ModalController, LoadingController, AlertController, ToastController } from '@ionic/angular';
 import { ProdutoComprado } from './../../model/produtoComprado';
 import { Usuario } from 'src/app/model/usuario';
 
@@ -11,6 +11,7 @@ import { BuyProductPage } from '../buy-product/buy-product.page';
 import { ProductServiceService } from 'src/app/providers/service/product/product-service.service';
 import { StorageService } from 'src/app/providers/storage/storage.service';
 import { StoragePurchasedService } from 'src/app/providers/storage/storage-purchased.service';
+import { zip } from 'rxjs/operators';
 @Component({
   selector: "app-tab2",
   templateUrl: "./tab2.page.html",
@@ -29,13 +30,15 @@ export class Tab2Page implements OnInit {
   constructor(public service: ProductServiceService, private router: Router, private modalController: ModalController,
     private storage: StorageService, private storagePurchased: StoragePurchasedService,
     private loadingController: LoadingController, private apiProduct: ProductServiceService,
-    private alertController: AlertController) {
+    private alertController: AlertController,
+    private toast: ToastController) {
 
   }
 
   ngOnInit() {
 
     this.getUser();
+
   }
   ionViewCanEnter() {
     console.log(this.storagePurchased.ProdutosComprados.length);
@@ -51,7 +54,7 @@ export class Tab2Page implements OnInit {
 
   getProducts(type: any) {
     return this.storage.get('ProdutoPedido').then((result => {
-
+      console.log(result);
       this.filterByType(type, result);
 
     }));
@@ -85,6 +88,8 @@ export class Tab2Page implements OnInit {
         'produto': product,
       }
     };
+
+
     this.router.navigate(["/product-details"], navExtras);
   }
 
@@ -104,7 +109,7 @@ export class Tab2Page implements OnInit {
   goToProduct(produto: Produto) {
     let product = JSON.stringify(produto);
 
-    let grupo = this.usuario['grupoEconomico']
+    let grupo = this.usuario['grupoEconomico'];
     let navExtras: NavigationExtras = {
       queryParams: {
         'produto': product,
@@ -139,7 +144,6 @@ export class Tab2Page implements OnInit {
 
   async presentAlertConfirm() {
 
-
     const alert = await this.alertController.create({
       header: 'Finalizar',
       message: 'Message <strong>text</strong>',
@@ -161,19 +165,32 @@ export class Tab2Page implements OnInit {
     });
 
     await alert.present();
+
   }
 
   finish() {
 
-    this.buildJson(this.storagePurchased.ProdutosComprados);
-    // this.apiProduct.insertCompra(this.storagePurchased.ProdutosComprados);
-
+    if (this.storagePurchased.ProdutosCompradosLista.length) {
+      this.apiProduct.insertCompra(this.storagePurchased.ProdutosCompradosLista);
+    } else {
+      this.showToast('É necessario comprar para finalizar');
+    }
   }
 
-  buildJson(arr: Array<ProdutoComprado>) {
 
+  verifyIfAlreadyBought(produto: Produto): boolean {
 
+    let ret = this.storagePurchased.ProdutosCompradosLista.filter((value, index) => {
+      return value['idPedido'] === produto['idPedido'];
+    });
+
+    if (ret.length) return true
+    else return false
   }
 
+  async showToast(mensagem: string) {
+    const toast = await this.toast.create({ message: mensagem, duration: 3000 });
+    toast.present();
+  }
 
 }

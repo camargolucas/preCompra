@@ -69,7 +69,7 @@ export class BuyProductPage implements OnInit {
     this.navCtrl.navigateBack('/');
   }
 
-
+  //ERROR : IDPEDIDO == UNDEFINED | WHYYYY ?
   ngOnInit() {
     let produtoJson: any;
     this.route.queryParams.subscribe(result => {
@@ -118,6 +118,7 @@ export class BuyProductPage implements OnInit {
   disableButton() {
     return this.disable = true;
   }
+
   enableButton() {
     return this.disable = false;
   }
@@ -134,11 +135,15 @@ export class BuyProductPage implements OnInit {
   }
 
   private _filter(value: string): string[] {
+
     const filterValue = value.toLowerCase();
 
     return this.options.filter((result => {
+
       return result['FANTASIA'].toLowerCase().startsWith(filterValue.toLowerCase());
+
     }));
+
   }
 
   cancel() {
@@ -156,14 +161,16 @@ export class BuyProductPage implements OnInit {
   insert() {
 
     this.produtoCompradoLista.idPedido = this.produtoComprado.idPedido;
-    this.produtoCompradoLista.ProdutoComprado.push(this.produtoComprado);
 
+    this.produtoCompradoLista.ProdutoComprado.push(this.produtoComprado);
 
     this.storagePurchased.insert(this.produtoCompradoLista)
       .then((result) => {
 
         this.presentToast('Produto Inserido com sucesso');
+
         this.dismissLoading();
+
         this.nav.pop();
 
       })
@@ -171,6 +178,7 @@ export class BuyProductPage implements OnInit {
 
         this.dismissLoading();
         this.presentToast('Houve um problema, tente novamente mais tarde');
+
       });
   }
 

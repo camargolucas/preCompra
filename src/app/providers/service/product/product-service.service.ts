@@ -9,6 +9,7 @@ import { Util } from 'src/app/util/util';
 import { ProdutoComprado } from 'src/app/model/produtoComprado';
 import { Observable } from 'rxjs';
 import { StorageService } from '../../storage/storage.service';
+import { ProdutoCompradoLista } from 'src/app/model/produtoCompradoLista';
 @Injectable({
   providedIn: "root"
 })
@@ -30,6 +31,7 @@ export class ProductServiceService extends ApiConfig {
   }
 
   getByGroup(data) {
+
     let dataStr = JSON.stringify(data);
     return this.http
       .get<Produto[]>(this.API_URL + "products/getRequestByGroup/" + encodeURI(dataStr))
@@ -51,15 +53,16 @@ export class ProductServiceService extends ApiConfig {
     return this.http
       .get<Produto[]>(this.API_URL + "products/getRequestByProduct/" + encodeURI(dataStr))
       .pipe(tap(console.log));
+
   }
 
-  insertCompra(produto: ProdutoComprado[]) {
+  insertCompra(produto: Array<ProdutoCompradoLista>) {
     let URL = this.API_URL + `products/insertCompra/`;
 
     return this.http.post<ProdutoComprado[]>(URL, produto, this.getHeaderConfig(this.storage.usuario.token))
       .subscribe(data => {
 
-      })
+      });
 
   }
 }

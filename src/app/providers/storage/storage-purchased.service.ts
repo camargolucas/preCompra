@@ -46,6 +46,7 @@ export class StoragePurchasedService {
 
 					this.ProdutosCompradosLista.push(data);
 					return this.set(this.ProdutosCompradosLista);
+
 				}
 
 			})
@@ -54,28 +55,34 @@ export class StoragePurchasedService {
 			});
 	}
 
-	public set(data: any) {
+	public set(data: ProdutoCompradoLista[]) {
 		return this.storage.set(this.key, data);
 	}
 
-	public async delete(produtoComprado: any) {
+	public async delete(produtoComprado: ProdutoComprado) {
 
-		this.ProdutosCompradosLista.forEach(element => {
+		this.ProdutosCompradosLista.forEach((element, i) => {
 			if (element['idPedido'] === produtoComprado['idPedido']) {
 				element['ProdutoComprado'].findIndex((x, index) => {
 					let _found: boolean = (x['idComprado'] === produtoComprado['idComprado']);
 					if (_found) {
-						element['ProdutoComprado'].splice(index, 1);
+
+
+						if (element['ProdutoComprado'].length > 1)
+							element['ProdutoComprado'].splice(index, 1)
+						else
+							this.ProdutosCompradosLista.splice(i, 1);
+
 						this.set(this.ProdutosCompradosLista);
+
 						return true;
 					}
-				})
-
+				});
 			}
-		})
+		});
 	}
 
-	public async update(produtoComprado) {
+	public async update(produtoComprado: ProdutoComprado) {
 		this.ProdutosCompradosLista.forEach(element => {
 			if (element['idPedido'] === produtoComprado['idPedido']) {
 				element['ProdutoComprado'].findIndex((x, index) => {
@@ -87,7 +94,6 @@ export class StoragePurchasedService {
 						return true;
 					}
 				})
-
 			}
 		});
 	}
