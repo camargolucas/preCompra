@@ -1,6 +1,6 @@
+import { Usuario } from './../../../model/usuario';
 import { StorageService } from 'src/app/providers/storage/storage.service';
 import { ApiConfig } from './../../../util/api-config';
-import { Usuario } from "src/app/model/usuario";
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { tap } from "rxjs/operators";
@@ -42,24 +42,22 @@ export class UserServiceService extends ApiConfig {
   }
 
 
-  getUser(data): Observable<Usuario[]> {
+  getUser(data) {
 
 
     let dataStr = JSON.stringify(data);
+
     return this.http
-      .get<Usuario[]>(this.API_URL + "users/get/" + encodeURI(dataStr))
+      .get(this.API_URL + "users/get/" + encodeURIComponent(dataStr))
       .pipe(
-
-        retry(1),
-
         catchError((error: HttpErrorResponse) => {
           let errorMessage = '';
           if (error.error instanceof ErrorEvent) {
             // client-side error
-            errorMessage = `Error: ${error.error.message}`;
+            errorMessage = `client ${error.error.message}`;
           } else {
             // server-side error
-            errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+            errorMessage = `server ${error.status}\nMessage: ${error.message}`;
           }
           this.dismissLoading();
           return throwError(errorMessage);
@@ -69,6 +67,12 @@ export class UserServiceService extends ApiConfig {
 
   loginAuthentication(login) {
     return this.getUser(login);
+  }
+
+  getIsAvaibleToBuy(usuario: Usuario) {
+    let userData = JSON.stringify(usuario)
+
+    return this.http.get(this.API_URL + "users/getIsAvaibleToBuy/" + encodeURIComponent(userData))
   }
 
 

@@ -38,6 +38,7 @@ export class StorageService {
           arrResult.push(data);
 
           return this.update(key, arrResult);
+
         } else {
           arrResult.push(data)
           return this.update(key, arrResult)
@@ -49,8 +50,9 @@ export class StorageService {
   }
 
   // ##########################################
-  // ## Resgata um objeto pela chave(key) #####
+  // ## Resgata um objeto no storage pela chave(key) #####
   public get(key: string) {
+
     return this.storage.get(key);
   }
 }

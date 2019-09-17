@@ -21,28 +21,32 @@ export class AppComponent {
     this.initializeApp();
   }
 
-  initializeApp() {
-    this.platform.ready().then(() => {
-
-      this.storagePurchased.get()
-        .then((value) => {
-          if (value !== null) {
-            //this.storagePurchased.ProdutosComprados = value
-
-            this.storagePurchased.ProdutosCompradosLista = value;
-          }
-          else this.storagePurchased.ProdutosCompradosLista = [];
-
-        });
-
-      this.storage.get('Usuario')
-        .then((value => {
-          if (value !== null) this.storage.usuario = value;
-        }))
-
+  async initializeApp() {
+    await this.platform.ready().then(() => {
+      this.setUsuario()
+      this.setStoragePurchased()
 
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
+  }
+
+  async setUsuario() {
+    await this.storage.get('Usuario')
+      .then((value => {
+        if (value !== null) this.storage.usuario = value;
+      }))
+  }
+
+  async setStoragePurchased() {
+    await this.storagePurchased.get()
+      .then((value) => {
+        if (value !== null) {
+
+          this.storagePurchased.ProdutosCompradosLista = value;
+
+        }
+        else this.storagePurchased.ProdutosCompradosLista = [];
+      });
   }
 }

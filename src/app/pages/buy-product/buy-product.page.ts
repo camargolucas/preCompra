@@ -11,21 +11,23 @@ import { ViewController } from '@ionic/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
-import { MatAutocompleteTrigger, MatAutocomplete } from '@angular/material';
+import { MatAutocompleteTrigger, MatAutocomplete, MAT_SELECT_SCROLL_STRATEGY, MAT_AUTOCOMPLETE_SCROLL_STRATEGY } from '@angular/material';
 import { Route } from '@angular/compiler/src/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProdutoCompradoLista } from 'src/app/model/produtoCompradoLista';
+import { Overlay, BlockScrollStrategy } from '@angular/cdk/overlay';
 
 
 @Component({
   selector: 'app-buy-product',
   templateUrl: './buy-product.page.html',
-  styleUrls: ['./buy-product.page.scss']
+  styleUrls: ['./buy-product.page.scss'],
+
 })
 
 
 export class BuyProductPage implements OnInit {
-
+  @ViewChild(MatAutocomplete) autoComplete: MatAutocomplete;
   @ViewChild(MatAutocompleteTrigger) private trigger: MatAutocompleteTrigger;
 
   produto: Produto;
@@ -43,6 +45,8 @@ export class BuyProductPage implements OnInit {
   filteredOptions: Observable<string[]>;
   edit: boolean;
   PRODUCT_NAME: string;
+  PRODUCT_QTD_PEDIDA: number;
+  PRODUCT_UNIDADE: string;
   loading: any;
   disable;
   produtoCompradoLista: ProdutoCompradoLista = new ProdutoCompradoLista;
@@ -58,8 +62,9 @@ export class BuyProductPage implements OnInit {
     , private loadingController: LoadingController,
     private navCtrl: NavController) {
 
-    this.produtoCompradoLista.ProdutoComprado = [];
 
+
+    this.produtoCompradoLista.ProdutoComprado = [];
     this.storage.get('ClienteFornecedor').then((result => {
       this.options = result;
     }));
@@ -71,28 +76,38 @@ export class BuyProductPage implements OnInit {
 
   //ERROR : IDPEDIDO == UNDEFINED | WHYYYY ?
   ngOnInit() {
+
     let produtoJson: any;
     this.route.queryParams.subscribe(result => {
+
       produtoJson = JSON.parse(result['produto']);
+
+      this.PRODUCT_UNIDADE = produtoJson['unidade']
       this.PRODUCT_NAME = produtoJson['nome'];
 
+      // Pagina de Edição
       if (produtoJson['idComprado']) {
+        this.PRODUCT_QTD_PEDIDA = JSON.parse(result['qtdPedida'])
         this.produtoComprado = produtoJson;
         this.edit = true;
         if (this.produtoComprado.unidadeComprada) this.setDisabled(this.produtoComprado.unidadeComprada);
 
+        // Pagina de Inserção
       } else {
 
         this.produtoComprado['id'] = produtoJson['id'];
         this.produtoComprado['nome'] = produtoJson['nome'];
         this.produtoComprado['unidade'] = produtoJson['unidade'];
         this.produtoComprado['idPedido'] = produtoJson['idPedido'];
+        this.setDisabled('Caixa')
+        this.PRODUCT_QTD_PEDIDA = produtoJson['qtd']
 
         this.edit = false;
       }
     });
 
     this.unidades = this.util.getUnidades();
+
     this.validationMessages = this.util.getMessages();
 
     this.filteredOptions = this.fornecedorFormControl.valueChanges.pipe(
@@ -160,8 +175,8 @@ export class BuyProductPage implements OnInit {
 
   insert() {
 
+    this.produtoComprado.usuario = this.storage.usuario
     this.produtoCompradoLista.idPedido = this.produtoComprado.idPedido;
-
     this.produtoCompradoLista.ProdutoComprado.push(this.produtoComprado);
 
     this.storagePurchased.insert(this.produtoCompradoLista)
@@ -174,6 +189,7 @@ export class BuyProductPage implements OnInit {
         this.nav.pop();
 
       })
+
       .catch((err) => {
 
         this.dismissLoading();
@@ -230,5 +246,4 @@ export class BuyProductPage implements OnInit {
     });
     toast.present();
   }
-
 }

@@ -1,3 +1,4 @@
+import { StorageService } from './../../providers/storage/storage.service';
 import { ProdutoCompradoLista } from 'src/app/model/produtoCompradoLista';
 import { ModalController, ToastController, NavController } from '@ionic/angular';
 import { Produto } from 'src/app/model/produto';
@@ -24,7 +25,7 @@ export class ProductDetailsPage implements OnInit {
 
   constructor(private route: ActivatedRoute, private storage: StoragePurchasedService,
     private modalController: ModalController, private toast: ToastController,
-    private router: Router, public navCtrl: NavController) {
+    private router: Router, public navCtrl: NavController, private _storage: StorageService) {
 
   }
 
@@ -41,17 +42,23 @@ export class ProductDetailsPage implements OnInit {
     let navExtras: NavigationExtras = {
       queryParams: {
         'produto': product,
+        'qtdPedida': this.produto['qtd']
       }
     };
     this.router.navigate(["/buy-product"], navExtras);
   }
 
   async openModal(produto: Produto) {
+
     const modal = await this.modalController.create({
       component: BuyProductPage,
       cssClass: "my-custom-modal-css",
+
       componentProps: {
-        produto: produto
+        produto: {
+          'produtoComprado': produto,
+          'qtdPedida': this.produto['qtd']
+        },
       }
     });
     return await modal.present();
@@ -75,18 +82,17 @@ export class ProductDetailsPage implements OnInit {
   getDataRoute() {
     return this.route.queryParams.subscribe(result => {
       this.produto = JSON.parse(result['produto']);
+
     });
   }
 
   async loadProductData() {
 
     let filtered = await this.storage.ProdutosCompradosLista.filter(((product, index, arr) => {
-
-      return product['idPedido'] === this.produto.idPedido;
-
+      return (product['idPedido'] === this.produto.idPedido);
     }));
 
-    if (filtered.length) this.produtos = filtered[0]['ProdutoComprado']
+    if (filtered.length) this.produtos = filtered[0]['ProdutoComprado'].filter(x => x.usuario.idUsuario === this._storage.usuario.idUsuario)
     else this.produtos = [];
 
   }

@@ -45,6 +45,7 @@ export class StoragePurchasedService {
 				} else {
 
 					this.ProdutosCompradosLista.push(data);
+
 					return this.set(this.ProdutosCompradosLista);
 
 				}

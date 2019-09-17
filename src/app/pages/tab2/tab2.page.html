@@ -72,7 +72,7 @@
     </ion-list>
   </ion-card>
 
-  <ion-fab (click)="presentAlertConfirm()" *ngIf="storagePurchased.ProdutosCompradosLista.length" vertical="bottom"
+  <ion-fab (click)="presentAlertFinish()" *ngIf="getFinishButton() && hasDataInArray()" vertical="bottom"
     horizontal="end" slot="fixed">
     <ion-fab-button>
       <ion-icon name="checkmark"></ion-icon>

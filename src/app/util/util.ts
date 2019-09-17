@@ -2,12 +2,19 @@ import { Unidade } from './../model/unidade';
 
 export class Util {
 
+
+    private _codes_api_return = {
+        'success': '1',
+        'error': '2'
+    }
+
+
     unidade: Unidade[] = [
-        {
+     /*   {
             tipo: 'Kilo',
             value: 'kg'
         },
-        /* {
+         {
             tipo: 'Bandeja',
             value: 'bj'
         } ,
@@ -54,6 +61,10 @@ export class Util {
 
     getMessages() {
         return this.validation_messages;
+    }
+
+    getCodesApis() {
+        return this._codes_api_return
     }
 
 }

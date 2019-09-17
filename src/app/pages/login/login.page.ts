@@ -1,13 +1,15 @@
+import { StoragePurchasedService } from './../../providers/storage/storage-purchased.service';
 import { SupplierService } from './../../providers/service/supplier/supplier.service';
 import { StorageService } from '../../providers/storage/storage.service';
 import { Usuario } from './../../model/usuario';
 import { UserServiceService } from '../../providers/service/user/user-service.service';
 import { Router } from "@angular/router";
-import { NavController, ToastController, LoadingController } from "@ionic/angular";
+import { NavController, ToastController, LoadingController, AlertController } from "@ionic/angular";
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { ProductServiceService } from 'src/app/providers/service/product/product-service.service';
 import { NativeKeyboard } from '@ionic-native/native-keyboard/ngx';
 import { Keyboard } from '@ionic-native/keyboard/ngx';
+import { ProdutoCompradoLista } from 'src/app/model/produtoCompradoLista';
 
 @Component({
   selector: "app-login",
@@ -29,7 +31,9 @@ export class LoginPage implements OnInit {
     private apiSupplier: SupplierService,
     private loadingController: LoadingController,
     private nativeKb: NativeKeyboard,
-    private keybd: Keyboard
+    private keybd: Keyboard,
+    private storagePurchased: StoragePurchasedService,
+    private alertController: AlertController
   ) { }
 
   ngOnInit() { }
@@ -66,6 +70,10 @@ export class LoginPage implements OnInit {
     }
   }
 
+  ionViewDidEnter() {
+    this.enableButton();
+  }
+
   async login() {
     await this.disableButton();
     await this.userService.presentLoading();
@@ -93,14 +101,40 @@ export class LoginPage implements OnInit {
 
         } else {
           this.userService.dismissLoading();
+          this.enableButton();
           this.showToast('Usuario inválido');
         }
-
       }, error => {
         this.enableButton();
-        this.showToast('Houve um problema ao consultar o banco de dados')
+        this.presentAlertConfirm(error)
+
       });
   }
+
+  async presentAlertConfirm(error) {
+    const alert = await this.alertController.create({
+      header: 'Confirm!',
+      message: error,
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Okay',
+          handler: () => {
+            console.log('Confirm Okay');
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
 
   fillStorageFunctions(user) {
     this.fillStorageRequestedProducts(user['grupoEconomico']);

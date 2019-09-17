@@ -1,3 +1,4 @@
+import { AppMinimize } from '@ionic-native/app-minimize/ngx';
 import { ApiConfig } from './util/api-config';
 import { NativeKeyboard } from '@ionic-native/native-keyboard/ngx';
 import { Keyboard } from '@ionic-native/keyboard/ngx';
@@ -66,7 +67,8 @@ import { BrMaskerModule } from 'brmasker-ionic-3';
     DatePipe,
     Keyboard,
     NativeKeyboard,
-    ApiConfig
+    ApiConfig,
+    AppMinimize
   ],
   bootstrap: [AppComponent]
 })

@@ -1,4 +1,4 @@
 export class Unidade {
-    tipo: string;
+    tipo: string = 'CAIXA';
     value: string;
 }

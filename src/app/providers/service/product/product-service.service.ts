@@ -15,7 +15,6 @@ import { ProdutoCompradoLista } from 'src/app/model/produtoCompradoLista';
 })
 
 
-
 export class ProductServiceService extends ApiConfig {
   public ProdutoPedido: Array<Produto> = [];
 
@@ -44,7 +43,6 @@ export class ProductServiceService extends ApiConfig {
     return this.http
       .get<Produto[]>(this.API_URL + "products/getRequestDetailedByGroup/" + encodeURI(dataStr))
       .pipe(tap(console.log));
-
   }
 
   getByProduct(data) {
@@ -57,12 +55,10 @@ export class ProductServiceService extends ApiConfig {
   }
 
   insertCompra(produto: Array<ProdutoCompradoLista>) {
+
     let URL = this.API_URL + `products/insertCompra/`;
 
-    return this.http.post<ProdutoComprado[]>(URL, produto, this.getHeaderConfig(this.storage.usuario.token))
-      .subscribe(data => {
-
-      });
+    return this.http.post<any>(URL, produto, this.getHeaderConfig(this.storage.usuario.token))
 
   }
 }
