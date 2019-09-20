@@ -34,7 +34,30 @@ ion-item {
         color:var(--ion-color-medium-shade)
     }
 }
+.example-container {
+  display: flex;
+  flex-direction: column;
+}
 
+.example-form {
+ 
+  width: 100%;
+  display: grid;
+  padding: 5%;
+}
+
+.mat-form-field-label-wrapper {
+    color: red;
+}
+
+
+.example-full-width {
+  width: 100%;
+}
+
+.example-container > * {
+  width: 100%;
+}
 .peso-field{
     width: 100%;
 }
@@ -70,11 +93,15 @@ ion-input {
 }
 
 .form {
-    min-width: 150px;
-    max-width: 650px;
+    /* min-width: 150px;
+    max-width: 650px; */
     width: 100%;
     display: block;
 
+}
+
+.mat-form-field{
+    display: block;
 }
 
 .input-fornecedor {
@@ -93,8 +120,8 @@ ion-input {
 
 .fornecedor-field {
    width: 100%;
-   max-width: 650px;
-   min-width: 150px;
+  /*  max-width: 650px;
+   min-width: 150px; */
    padding-left: calc(var(--padding-start) + var(--ion-safe-area-left, 0px));
 }
 

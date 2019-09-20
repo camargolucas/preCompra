@@ -9,8 +9,8 @@ import { Injectable } from '@angular/core';
 export class ApiConfig {
 
     private requestOptions: any;
-    //readonly API_URL: string = "http://apprequestapi.kinghost.net:21093/"
-    readonly API_URL = "http://localhost:21093/";
+    readonly API_URL: string = "http://apprequestapi.kinghost.net:21093/"
+    //readonly API_URL = "http://localhost:21093/";
 
     private headers;
 
