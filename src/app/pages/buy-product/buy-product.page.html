@@ -74,47 +74,49 @@
                 </div>
 
             </div>
-            <div>
+            <div class="item-peso-qtd">
                 <div>
-                    <!-- <ion-item class="item-quantidade" lines="inset">
+                    <div>
+                        <!-- <ion-item class="item-quantidade" lines="inset">
                             <ion-label position="stacked">Quantidade</ion-label>
                             <ion-input [(ngModel)]="produtoComprado.qtd" align="left" type="number"
                                 placeholder="quantidade" formControlName="quantidade">
                             </ion-input>
                         </ion-item> -->
-                    <mat-form-field>
-                        <input [(ngModel)]="produtoComprado.qtd" formControlName="quantidade" matInput type="number"
-                            placeholder="Quantidade">
-                    </mat-form-field>
+                        <mat-form-field>
+                            <input [(ngModel)]="produtoComprado.qtd" formControlName="quantidade" matInput type="number"
+                                placeholder="Quantidade">
+                        </mat-form-field>
+                    </div>
+                    <div>
+                        <ng-container *ngFor="let validation of validationMessages.quantidade">
+                            <div class="error-message"
+                                *ngIf="formProduct.get('quantidade').hasError(validation.type) && (formProduct.get('quantidade').dirty || formProduct.get('quantidade').touched)">
+                                {{validation.message}}
+                            </div>
+                        </ng-container>
+                    </div>
                 </div>
-                <div>
-                    <ng-container *ngFor="let validation of validationMessages.quantidade">
-                        <div class="error-message"
-                            *ngIf="formProduct.get('quantidade').hasError(validation.type) && (formProduct.get('quantidade').dirty || formProduct.get('quantidade').touched)">
-                            {{validation.message}}
-                        </div>
-                    </ng-container>
-                </div>
-            </div>
-            <div>
                 <div class="peso-field">
-                    <!--  <ion-item [disabled]="disabled" lines="inset">
+                    <div >
+                        <!--  <ion-item [disabled]="disabled" lines="inset">
                         <ion-label position="stacked">Peso</ion-label>
                         <ion-input [(ngModel)]="produtoComprado.peso" type="number" placeholder="peso" value="1"
                             formControlName="peso"></ion-input>
                     </ion-item> -->
-                    <mat-form-field>
-                        <input [(ngModel)]="produtoComprado.peso" formControlName="peso" matInput type="number"
-                            placeholder="Peso" value="1">
-                    </mat-form-field>
-                </div>
-                <div>
-                    <ng-container *ngFor="let validation of validationMessages.peso">
-                        <div class="error-message"
-                            *ngIf="formProduct.get('peso').hasError(validation.type) && (formProduct.get('peso').dirty || formProduct.get('peso').touched)">
-                            {{validation.message}}
-                        </div>
-                    </ng-container>
+                        <mat-form-field>
+                            <input [(ngModel)]="produtoComprado.peso" formControlName="peso" matInput type="number"
+                                placeholder="Peso" value="1">
+                        </mat-form-field>
+                    </div>
+                    <div>
+                        <ng-container *ngFor="let validation of validationMessages.peso">
+                            <div class="error-message"
+                                *ngIf="formProduct.get('peso').hasError(validation.type) && (formProduct.get('peso').dirty || formProduct.get('peso').touched)">
+                                {{validation.message}}
+                            </div>
+                        </ng-container>
+                    </div>
                 </div>
             </div>
             <div>

@@ -59,13 +59,16 @@ ion-item {
   width: 100%;
 }
 .peso-field{
+    padding-right: 1%;
+    padding-left: 2%;
     width: 100%;
+    min-width: 40px;
 }
 
 .item-peso-qtd { 
     display: flex;
     justify-content: space-between;
-    width: 100%;
+    width: 100%
 }
 
 .item-quantidade {
@@ -123,6 +126,7 @@ ion-input {
   /*  max-width: 650px;
    min-width: 150px; */
    padding-left: calc(var(--padding-start) + var(--ion-safe-area-left, 0px));
+ 
 }
 
 .buttons-save-cancel {
