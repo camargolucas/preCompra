@@ -8,7 +8,7 @@
 
 
 <ion-content padding>
-    <div>
+    <div class="div-content">
         <!-- <ion-item lines="none" class="label-product"> -->
         <div class="label-product">
             <ion-label color="primary">
@@ -16,6 +16,7 @@
             </ion-label>
             <ion-label class="label-quantidade">{{PRODUCT_QTD_PEDIDA}} {{PRODUCT_UNIDADE}}(s)</ion-label>
         </div>
+        
         <!--  </ion-item> -->
         <form class="form" [formGroup]="formProduct">
             <div>
@@ -72,7 +73,6 @@
                         </div>
                     </ng-container>
                 </div>
-
             </div>
             <div class="item-peso-qtd">
                 <div>
@@ -84,7 +84,7 @@
                             </ion-input>
                         </ion-item> -->
                         <mat-form-field>
-                            <input [(ngModel)]="produtoComprado.qtd" formControlName="quantidade" matInput type="number"
+                            <input [(ngModel)]="produtoComprado.qtd" formControlName="quantidade" matInput type="number"  
                                 placeholder="Quantidade">
                         </mat-form-field>
                     </div>
@@ -127,7 +127,7 @@
                             formControlName="valor"></ion-input>
                     </ion-item> -->
                     <mat-form-field>
-                        <input [(ngModel)]="produtoComprado.valor" formControlName="valor" matInput type="number"
+                        <input type="text" mask="separator.2" thousandSeparator="," [(ngModel)]="produtoComprado.valor" formControlName="valor" matInput
                             placeholder="Valor">
                     </mat-form-field>
                 </div>

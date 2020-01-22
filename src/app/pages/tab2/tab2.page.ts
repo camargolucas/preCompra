@@ -173,18 +173,18 @@ export class Tab2Page implements OnInit {
 
     const alert = await this.alertController.create({
       header: 'Finalizar',
-      message: 'Message <strong>text</strong>',
+      message: 'Deseja finalizar a <strong>compra</strong>',
       buttons: [
         {
 
-          text: 'Cancel',
+          text: 'Cancelar',
           role: 'cancel',
           cssClass: 'secondary',
           handler: (blah) => {
 
           }
         }, {
-          text: 'Okay',
+          text: 'Confirmar',
           handler: () => {
             this.finish();
           }

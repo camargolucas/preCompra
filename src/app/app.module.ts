@@ -12,7 +12,7 @@ import { HttpClientModule } from "@angular/common/http";
 import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { RouteReuseStrategy } from "@angular/router";
-
+import { NgxMaskModule, IConfig } from 'ngx-mask'
 import { IonicModule, IonicRouteStrategy } from "@ionic/angular";
 import { SplashScreen } from "@ionic-native/splash-screen/ngx";
 import { StatusBar } from "@ionic-native/status-bar/ngx";
@@ -30,6 +30,10 @@ import { ProductServiceService } from './providers/service/product/product-servi
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { NgxCurrencyModule } from "ngx-currency";
 import { BrMaskerModule } from 'brmasker-ionic-3';
+
+
+export let options: Partial<IConfig> | (() => Partial<IConfig>);
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -53,7 +57,8 @@ import { BrMaskerModule } from 'brmasker-ionic-3';
     AutoCompleteModule,
     ScrollingModule,
     BrMaskerModule,
-    NgxCurrencyModule
+    NgxCurrencyModule,
+    NgxMaskModule.forRoot(options)
 
 
 

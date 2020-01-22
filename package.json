@@ -48,6 +48,7 @@
     "install": "^0.12.2",
     "ionic4-auto-complete": "^1.6.1",
     "ngx-currency": "^2.0.0",
+    "ngx-mask": "^8.1.7",
     "rxjs": "~6.3.3",
     "rxjs-observe": "^2.1.4",
     "zone.js": "~0.8.29"

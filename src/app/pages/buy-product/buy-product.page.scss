@@ -1,7 +1,13 @@
 @import '~@angular/material/theming';
 $fontsize:13px;
 
-
+.div-content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    min-height: 90%;
+}
 
 ion-note {
     margin-top: auto;
