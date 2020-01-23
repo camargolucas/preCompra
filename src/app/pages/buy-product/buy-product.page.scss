@@ -1,7 +1,13 @@
 @import '~@angular/material/theming';
 $fontsize:13px;
 
-
+.div-content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    min-height: 90%;
+}
 
 ion-note {
     margin-top: auto;
@@ -34,15 +40,41 @@ ion-item {
         color:var(--ion-color-medium-shade)
     }
 }
+.example-container {
+  display: flex;
+  flex-direction: column;
+}
 
+.example-form {
+ 
+  width: 100%;
+  display: grid;
+  padding: 5%;
+}
+
+.mat-form-field-label-wrapper {
+    color: red;
+}
+
+
+.example-full-width {
+  width: 100%;
+}
+
+.example-container > * {
+  width: 100%;
+}
 .peso-field{
+    padding-right: 1%;
+    padding-left: 2%;
     width: 100%;
+    min-width: 40px;
 }
 
 .item-peso-qtd { 
     display: flex;
     justify-content: space-between;
-    width: 100%;
+    width: 100%
 }
 
 .item-quantidade {
@@ -70,11 +102,15 @@ ion-input {
 }
 
 .form {
-    min-width: 150px;
-    max-width: 650px;
+    /* min-width: 150px;
+    max-width: 650px; */
     width: 100%;
     display: block;
 
+}
+
+.mat-form-field{
+    display: block;
 }
 
 .input-fornecedor {
@@ -93,9 +129,10 @@ ion-input {
 
 .fornecedor-field {
    width: 100%;
-   max-width: 650px;
-   min-width: 150px;
+  /*  max-width: 650px;
+   min-width: 150px; */
    padding-left: calc(var(--padding-start) + var(--ion-safe-area-left, 0px));
+ 
 }
 
 .buttons-save-cancel {

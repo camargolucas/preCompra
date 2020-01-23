@@ -23,7 +23,7 @@ import { Overlay, BlockScrollStrategy } from '@angular/cdk/overlay';
   templateUrl: './buy-product.page.html',
   styleUrls: ['./buy-product.page.scss'],
 
-})
+})                                                                                                                                                                                                                                                                  
 
 
 export class BuyProductPage implements OnInit {

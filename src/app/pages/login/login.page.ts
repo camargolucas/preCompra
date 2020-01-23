@@ -91,7 +91,7 @@ export class LoginPage implements OnInit {
 
         let status = result['status'];
         let user = result['userData'][0];
-
+        console.log(status)
         if (status === 'success') {
           this.userService.dismissLoading();
           this.fillStorageFunctions(user);

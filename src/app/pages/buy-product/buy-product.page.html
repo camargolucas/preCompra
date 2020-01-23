@@ -8,7 +8,7 @@
 
 
 <ion-content padding>
-    <div>
+    <div class="div-content">
         <!-- <ion-item lines="none" class="label-product"> -->
         <div class="label-product">
             <ion-label color="primary">
@@ -16,11 +16,13 @@
             </ion-label>
             <ion-label class="label-quantidade">{{PRODUCT_QTD_PEDIDA}} {{PRODUCT_UNIDADE}}(s)</ion-label>
         </div>
+        
         <!--  </ion-item> -->
         <form class="form" [formGroup]="formProduct">
             <div>
                 <div>
-                    <mat-form-field class="fornecedor-field">
+                    <mat-form-field>
+                        <!-- class="fornecedor-field" -->
                         <input matInput maxlength="40" type="text" placeholder="Digite o fornecedor"
                             [formControl]="fornecedorFormControl" [matAutocomplete]="auto"
                             [(ngModel)]="produtoComprado.fornecedor">
@@ -28,7 +30,7 @@
 
                             <mat-option class="example-item" *ngFor="let option of filteredOptions | async | slice:0:9 "
                                 [value]="option.FANTASIA">
-                                {{option.FANTASIA }}
+                                {{option.FANTASIA}}
                             </mat-option>
 
                         </mat-autocomplete>
@@ -43,11 +45,9 @@
                     </ng-container>
                 </div>
             </div>
-
-            <div class="item-peso-qtd">
+            <div>
                 <div>
-                    <div>
-                        <ion-item lines="inset">
+                    <!--  <ion-item lines="inset">
                             <ion-label position="stacked">Unidade</ion-label>
                             <ion-select (ionChange)="setDisabled(produtoComprado.unidadeComprada)"
                                 [(ngModel)]="produtoComprado.unidadeComprada" placeholder="unidade"
@@ -56,25 +56,37 @@
                                     {{unidade.tipo}}
                                 </ion-select-option>
                             </ion-select>
-                        </ion-item>
-                    </div>
-                    <div>
-                        <ng-container *ngFor="let validation of validationMessages.unidade">
-                            <div class="error-message"
-                                *ngIf="formProduct.get('unidade').hasError(validation.type) && (formProduct.get('unidade').dirty || formProduct.get('unidade').touched)">
-                                {{validation.message}}
-                            </div>
-                        </ng-container>
-                    </div>
+                        </ion-item> -->
+                    <mat-form-field>
+                        <mat-select [(ngModel)]="produtoComprado.unidadeComprada" placeholder="Unidade"
+                            formControlName="unidade">
+                            <mat-option *ngFor="let unidade of unidades" value="{{unidade.tipo}}">{{unidade.tipo}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
                 </div>
                 <div>
+                    <ng-container *ngFor="let validation of validationMessages.unidade">
+                        <div class="error-message"
+                            *ngIf="formProduct.get('unidade').hasError(validation.type) && (formProduct.get('unidade').dirty || formProduct.get('unidade').touched)">
+                            {{validation.message}}
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+            <div class="item-peso-qtd">
+                <div>
                     <div>
-                        <ion-item class="item-quantidade" lines="inset">
+                        <!-- <ion-item class="item-quantidade" lines="inset">
                             <ion-label position="stacked">Quantidade</ion-label>
                             <ion-input [(ngModel)]="produtoComprado.qtd" align="left" type="number"
                                 placeholder="quantidade" formControlName="quantidade">
                             </ion-input>
-                        </ion-item>
+                        </ion-item> -->
+                        <mat-form-field>
+                            <input [(ngModel)]="produtoComprado.qtd" formControlName="quantidade" matInput type="number"  
+                                placeholder="Quantidade">
+                        </mat-form-field>
                     </div>
                     <div>
                         <ng-container *ngFor="let validation of validationMessages.quantidade">
@@ -85,31 +97,39 @@
                         </ng-container>
                     </div>
                 </div>
-            </div>
-            <div>
                 <div class="peso-field">
-                    <ion-item [disabled]="disabled" lines="inset">
+                    <div >
+                        <!--  <ion-item [disabled]="disabled" lines="inset">
                         <ion-label position="stacked">Peso</ion-label>
                         <ion-input [(ngModel)]="produtoComprado.peso" type="number" placeholder="peso" value="1"
                             formControlName="peso"></ion-input>
-                    </ion-item>
-                </div>
-                <div>
-                    <ng-container *ngFor="let validation of validationMessages.peso">
-                        <div class="error-message"
-                            *ngIf="formProduct.get('peso').hasError(validation.type) && (formProduct.get('peso').dirty || formProduct.get('peso').touched)">
-                            {{validation.message}}
-                        </div>
-                    </ng-container>
+                    </ion-item> -->
+                        <mat-form-field>
+                            <input [(ngModel)]="produtoComprado.peso" formControlName="peso" matInput type="number"
+                                placeholder="Peso" value="1">
+                        </mat-form-field>
+                    </div>
+                    <div>
+                        <ng-container *ngFor="let validation of validationMessages.peso">
+                            <div class="error-message"
+                                *ngIf="formProduct.get('peso').hasError(validation.type) && (formProduct.get('peso').dirty || formProduct.get('peso').touched)">
+                                {{validation.message}}
+                            </div>
+                        </ng-container>
+                    </div>
                 </div>
             </div>
             <div>
                 <div>
-                    <ion-item lines="inset">
+                    <!-- <ion-item lines="inset">
                         <ion-label position="stacked">Valor</ion-label>
                         <ion-input [(ngModel)]="produtoComprado.valor" type="number" placeholder="valor pago"
                             formControlName="valor"></ion-input>
-                    </ion-item>
+                    </ion-item> -->
+                    <mat-form-field>
+                        <input type="text" mask="separator.2" thousandSeparator="," [(ngModel)]="produtoComprado.valor" formControlName="valor" matInput
+                            placeholder="Valor">
+                    </mat-form-field>
                 </div>
                 <div>
                     <ng-container *ngFor="let validation of validationMessages.valor">

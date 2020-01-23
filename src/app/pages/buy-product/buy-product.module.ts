@@ -10,6 +10,9 @@ import { MatAutocompleteModule, MatFormFieldModule, MatOptionModule, MatInputMod
 import { AutoCompleteModule } from 'ionic4-auto-complete';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { BrMaskerModule } from 'brmasker-ionic-3';
+import { NgxMaskModule, IConfig } from 'ngx-mask'
+
+export let options: Partial<IConfig> | (() => Partial<IConfig>) 
 const routes: Routes = [
   {
     path: '',
@@ -19,6 +22,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
+    NgxMaskModule.forRoot(options),
     CommonModule,
     FormsModule,
     IonicModule,
