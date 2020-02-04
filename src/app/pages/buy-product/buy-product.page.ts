@@ -176,7 +176,7 @@ export class BuyProductPage implements OnInit {
   insert() {
 
     this.produtoComprado.usuario = this.storage.usuario
-    this.produtoCompradoLista.idPedido = this.produtoComprado.idPedido;
+    this.produtoCompradoLista.id = this.produtoComprado.id;
     this.produtoCompradoLista.ProdutoComprado.push(this.produtoComprado);
 
     this.storagePurchased.insert(this.produtoCompradoLista)

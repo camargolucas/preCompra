@@ -15,8 +15,6 @@ export class CompleteServiceService implements AutoCompleteService {
 
   getResults(keyword: string) {
     return this.storage.get('ProdutoPedido')
-      .then((ret => {
-        console.log(ret)
-      }))
+
   }
 }

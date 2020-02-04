@@ -61,7 +61,7 @@
               </div>
             </div>
           </ion-item>
-          <ion-item-options (ionSwipe)="goToProductDetail(produto)">
+          <ion-item-options *ngIf="getFinishButton()" (ionSwipe)="goToProductDetail(produto)">
             <ion-item-option (click)="goToProductDetail(produto)" expandable="true" color="primary">
               <ion-text>Detalhes</ion-text>
               <ion-icon slot="top" name="information-circle-outline"></ion-icon>

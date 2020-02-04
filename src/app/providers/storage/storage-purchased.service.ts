@@ -28,7 +28,7 @@ export class StoragePurchasedService {
 
 				if (result) {
 					for (let index = 0; index < result.length; index++) {
-						if (result[index]['idPedido'] === data['idPedido']) {
+						if (result[index]['id'] === data['id']) {
 							this.ProdutosCompradosLista = result;
 							this.ProdutosCompradosLista[index]['ProdutoComprado'].push(data['ProdutoComprado'][0])
 							this.set(this.ProdutosCompradosLista);
@@ -63,7 +63,7 @@ export class StoragePurchasedService {
 	public async delete(produtoComprado: ProdutoComprado) {
 
 		this.ProdutosCompradosLista.forEach((element, i) => {
-			if (element['idPedido'] === produtoComprado['idPedido']) {
+			if (element['id'] === produtoComprado['id']) {
 				element['ProdutoComprado'].findIndex((x, index) => {
 					let _found: boolean = (x['idComprado'] === produtoComprado['idComprado']);
 					if (_found) {
@@ -85,7 +85,7 @@ export class StoragePurchasedService {
 
 	public async update(produtoComprado: ProdutoComprado) {
 		this.ProdutosCompradosLista.forEach(element => {
-			if (element['idPedido'] === produtoComprado['idPedido']) {
+			if (element['id'] === produtoComprado['id']) {
 				element['ProdutoComprado'].findIndex((x, index) => {
 					let _found: boolean = (x['idComprado'] === produtoComprado['idComprado']);
 					if (_found) {

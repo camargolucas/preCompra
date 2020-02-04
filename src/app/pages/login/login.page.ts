@@ -91,18 +91,23 @@ export class LoginPage implements OnInit {
 
         let status = result['status'];
         let user = result['userData'][0];
-        console.log(status)
+       
         if (status === 'success') {
+         
           this.userService.dismissLoading();
           this.fillStorageFunctions(user);
 
           this.router.navigateByUrl("/app/tabs/tab2");
 
-
-        } else {
+ 
+        } else if(status === 'invalid user'){
           this.userService.dismissLoading();
           this.enableButton();
           this.showToast('Usuario inválido');
+        }else{
+          this.userService.dismissLoading();
+          this.enableButton();
+          this.showToast('Houve um problema ao efetuar o login');
         }
       }, error => {
         this.enableButton();
@@ -151,7 +156,7 @@ export class LoginPage implements OnInit {
   }
 
   fillStorageRequestedProducts(grupoEconomico: number) {
-    this.apiProduct.getDetailedByGroup(grupoEconomico).subscribe(result => {
+    this.apiProduct.getByGroup(grupoEconomico).subscribe(result => {
 
       this.storage.update('ProdutoPedido', result);
 

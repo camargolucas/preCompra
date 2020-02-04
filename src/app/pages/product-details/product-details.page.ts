@@ -4,7 +4,6 @@ import { ModalController, ToastController, NavController } from '@ionic/angular'
 import { Produto } from 'src/app/model/produto';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { NavParams } from '@ionic/angular';
 import { StoragePurchasedService } from 'src/app/providers/storage/storage-purchased.service';
 import { ProdutoComprado } from 'src/app/model/produtoComprado';
 import { BuyProductPage } from '../buy-product/buy-product.page';
@@ -89,7 +88,8 @@ export class ProductDetailsPage implements OnInit {
   async loadProductData() {
 
     let filtered = await this.storage.ProdutosCompradosLista.filter(((product, index, arr) => {
-      return (product['idPedido'] === this.produto.idPedido);
+     
+      return (product['id'] === this.produto.id);
     }));
 
     if (filtered.length) this.produtos = filtered[0]['ProdutoComprado'].filter(x => x.usuario.idUsuario === this._storage.usuario.idUsuario)
@@ -100,7 +100,7 @@ export class ProductDetailsPage implements OnInit {
   sumValor(): number {
     var initialValue = 0;
     var sum = this.produtos.reduce(function (accumulator, currentValue) {
-      return accumulator + currentValue.valor;
+      return Number(accumulator) + Number(currentValue.valor);
     }, initialValue);
     return sum;
   }
